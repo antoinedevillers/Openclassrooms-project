@@ -6,11 +6,28 @@ require_once('model/loginManager.php');
 class Backend
 {
 
-function formPost()
+function formCreatePost()
 {
-	require('view/frontend/formPost.php');
+	require('view/backend/formCreatePost.php');
 }
+function formChangePost()
 
+{	$postManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\PostManager();
+	$post = $postManager->getPost($_GET['id']);
+	require('view/backend/formChangePost.php');
+}
+function changePost( $title, $content,$id)
+{
+	$postManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\PostManager();
+
+	$modifiedPost = $postManager->editPost( $title, $content, $id);
+	if ($modifiedPost === false) {
+        throw new Exception('Impossible de modifier le commentaire !');
+    }
+    else {
+        header('Location: index.php?action=post&id='. $_GET['id']);
+    } 
+}
 function connexionAdmin()
 {   
     if ($_POST['pseudo_Connexion'] == NULL OR $_POST['pass_Connexion'] == NULL){
@@ -28,27 +45,21 @@ function connexionAdmin()
 
 		if (!$resultat)
 		{
-		echo 'Mauvais identifiant ou mot de passe !';
+			echo 'Mauvais identifiant ou mot de passe !';
 		} else {
 		    if ($isPasswordCorrect) {
-		          session_start();
-		          $_SESSION['id'] = $resultat['id'];
-		          $_SESSION['login'] = $_POST['pseudo_Connexion'];
+	          session_start();
+	          $_SESSION['id'] = $resultat['id'];
+	          $_SESSION['login'] = $_POST['pseudo_Connexion'];
 
-		          header('Location: index.php');
+	          header('Location: index.php');
 
 		    } else {
 
-		          echo 'Mauvais identifiant ou mot de passe !';
+	          echo 'Mauvais identifiant ou mot de passe !';
 		    }
 		}
 	}
-}
-function sessionAdmin()
-{
-	$loginManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\loginManager();
-
-	$req = $loginManager->getUser();
 }
 
 function deconnexionAdmin()

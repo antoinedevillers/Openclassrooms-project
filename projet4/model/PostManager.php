@@ -26,13 +26,13 @@ public function getPost($postId)
 public function insertPost($title, $content)
     {
         $db = $this->dbConnect();
-        $posts = $db->prepare('INSERT INTO posts(author, content, comment_date) VALUES(?, ?, NOW())');
+        $posts = $db->prepare('INSERT INTO posts(title, content, comment_date) VALUES(?, ?, NOW())');
         $affectedPost = $posts->execute(array($title, $content));
 
         return $affectedPost;
     }
 
-public function editPost($id, $title, $content)
+public function editPost( $title, $content, $id)
     {
        $db = $this->dbConnect();
         $comments = $db->prepare('UPDATE posts SET title = ?, content = ?, comment_date = NOW() WHERE id = ?');

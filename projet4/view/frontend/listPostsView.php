@@ -6,10 +6,9 @@
     
     <?php
 
-    // SI je suis connecté en tant qu'admin, le formulaire pour ajouter un billet s'affichera
     if(isset($_SESSION['id']) AND isset($_SESSION['login']))
     {
-        echo 'Bienvenue ' . $_SESSION['login'] . ' en tant qu\'administrateur';
+        echo 'Bienvenue dans l\'espace d\'administration';
     ?>
 
         <p><a href=index.php?action=deconnexionAdmin> Deconnexion</a></p>
@@ -30,6 +29,13 @@
         <h3>
             <?= htmlspecialchars($data['title']) ?>
             <em>le <?= $data['creation_date_fr'] ?></em>
+            <?php if(isset($_SESSION['id']) AND isset($_SESSION['login']))
+                    {
+                    ?>
+                    <p><a href="index.php?action=formChangePost&amp;id=<?= $data['id'] ?>" >Modifier le billet</a></p>
+                    <?php
+                }    
+    ?>
         </h3>
         
         <p>
@@ -46,4 +52,4 @@ $posts->closeCursor();
 </section>
 <?php $content = ob_get_clean(); ?>
 
-<?php require('template.php'); ?>
+<?php require('view/frontend/template.php'); ?>

@@ -11,7 +11,12 @@
     		<nav>
     			<ul>
     				<li><a href='index.php'>Accueil<a></li>
+                    <?php if(!isset($_SESSION['id']) AND !isset($_SESSION['login']))
+                    {?>
     				<li><a href='index.php?action=formConnexionAdmin'>Connexion Administration</a></li>
+                    <?php
+                    }
+                    ?>
     			</ul>
     		</nav>
     	</header>

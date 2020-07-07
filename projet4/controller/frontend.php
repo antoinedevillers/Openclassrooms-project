@@ -48,7 +48,7 @@ function comment($id)
 
     $comment = $commentManager->getComment($_GET['id']);
     
-    require ('view/frontend/modifyComment.php') ;   //On affiche la vue du formulaire 
+    require ('view/backend/modifyComment.php') ;   //On affiche la vue du formulaire 
    
 }
 

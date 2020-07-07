@@ -60,24 +60,34 @@ try { // On essaie de faire des choses
             }
         } else if ($_GET['action'] == 'connexionAdmin') {
             $backend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\backend();
-
             $connexionAdmin = $backend->connexionAdmin();
 
         } else if ($_GET['action'] == 'deconnexionAdmin') {
             $backend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\backend();
-
             $deconnexionAdmin = $backend->deconnexionAdmin();
+
         } else if ($_GET['action'] == 'formConnexionAdmin'){
             $frontend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\frontend();
-
             $formConnexionAdmin = $frontend->formConnexionAdmin();
+
         } else if ($_GET['action'] == 'formPost'){
             $backend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\backend();
-
             $formPost = $backend->formPost();
+
+        } else if ($_GET['action'] == 'formChangePost'){
+            $backend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\backend();
+            $formChangePost = $backend->formChangePost();
+
+        } else if ($_GET['action'] == 'changePost'){
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
+                
+                    $backend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\backend();
+                    $changePost = $backend->changePost($_POST['title'],$_POST['content'], $_GET['id']);
+                
+            }
         }
-    }
-    else {
+
+    } else {
         $frontend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\frontend();
 
             $listPosts = $frontend->listPosts();
