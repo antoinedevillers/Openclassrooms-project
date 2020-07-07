@@ -11,7 +11,6 @@
     		<nav>
     			<ul>
     				<li><a href='index.php'>Accueil<a></li>
-    				<li><a href='index.php?action=formInscriptionAdmin'>Inscription </a></li>
     				<li><a href='index.php?action=formConnexionAdmin'>Connexion Administration</a></li>
     			</ul>
     		</nav>

@@ -1,12 +1,15 @@
 <?php
-
+namespace Openclassrooms\sitesPHP\Openclassroomsproject\projet4\controller;
 // Chargement des classes
 require_once('model/PostManager.php');
 require_once('model/CommentManager.php');
 
+class Frontend
+{
+
 function listPosts()
 {
-    $postManager = new \OpenClassrooms\sitesPHP\projet4\model\PostManager();
+    $postManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\PostManager();
     $posts = $postManager->getPosts();
 
     require('view/frontend/listPostsView.php');
@@ -14,8 +17,8 @@ function listPosts()
 
 function post()
 {
-    $postManager = new \OpenClassrooms\sitesPHP\projet4\model\PostManager();
-    $commentManager = new \OpenClassrooms\sitesPHP\projet4\model\CommentManager();
+    $postManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\PostManager();
+    $commentManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\CommentManager();
 
     $post = $postManager->getPost($_GET['id']);
     $comments = $commentManager->getComments($_GET['id']);
@@ -25,7 +28,7 @@ function post()
 
 function addComment($postId, $author, $comment)
 {
-    $commentManager = new \OpenClassrooms\sitesPHP\projet4\model\CommentManager();
+    $commentManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\CommentManager();
 
     $affectedLines = $commentManager->postComment($postId, $author, $comment);
 
@@ -40,8 +43,8 @@ function addComment($postId, $author, $comment)
 function comment($id)
 {
    //On récupère le commentaire
-    $postManager = new \OpenClassrooms\sitesPHP\projet4\model\PostManager();
-    $commentManager = new \OpenClassrooms\sitesPHP\projet4\model\CommentManager();
+    $postManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\PostManager();
+    $commentManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\CommentManager();
 
     $comment = $commentManager->getComment($_GET['id']);
     
@@ -51,7 +54,7 @@ function comment($id)
 
 function changeComment($id, $comment)
 {   
-    $commentManager = new \OpenClassrooms\sitesPHP\projet4\model\CommentManager();
+    $commentManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\CommentManager();
 
     $modifiedLines = $commentManager->editComment($id, $comment);
 
@@ -67,5 +70,5 @@ function formConnexionAdmin()
     require ('view/frontend/formConnexionAdmin.php');
 }
 
-
+}
 

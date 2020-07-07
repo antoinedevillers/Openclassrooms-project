@@ -1,5 +1,5 @@
 <?php
-namespace Openclassrooms\sitesPHP\projet4\model;
+namespace Openclassrooms\sitesPHP\Openclassroomsproject\projet4\model;
 
 require_once("model/Manager.php");
 

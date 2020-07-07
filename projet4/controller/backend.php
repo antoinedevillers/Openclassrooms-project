@@ -1,8 +1,10 @@
 <?php
-
+namespace Openclassrooms\sitesPHP\Openclassroomsproject\projet4\controller;
 // Chargement des classes
 require_once('model/loginManager.php');
 
+class Backend
+{
 
 function formPost()
 {
@@ -16,7 +18,7 @@ function connexionAdmin()
         echo 'Vous n\'avez pas rempli tous les champs';
 
 	} else {
-		$loginManager = new \OpenClassrooms\sitesPHP\projet4\model\loginManager();
+		$loginManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\loginManager();
 
 		$req = $loginManager->getLoginAndPass();
 		$resultat = $req->fetch();
@@ -44,7 +46,7 @@ function connexionAdmin()
 }
 function sessionAdmin()
 {
-	$loginManager = new \OpenClassrooms\sitesPHP\projet4\model\loginManager();
+	$loginManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\loginManager();
 
 	$req = $loginManager->getUser();
 }
@@ -63,4 +65,5 @@ setcookie('pseudo', '');
 setcookie('pass', '');
 
 header('Location: index.php?action=listPosts');
+}
 }
