@@ -67,9 +67,5 @@ function formConnexionAdmin()
     require ('view/frontend/formConnexionAdmin.php');
 }
 
-function formInscriptionAdmin()
-{
-    require ('view/frontend/formInscription.php');
-}
 
 

@@ -9,39 +9,6 @@ function formPost()
 	require('view/frontend/formPost.php');
 }
 
-function addAdmin($login, $pass_hache)
-{	
-	// Vérification de la validité des identifiants
-	if($_POST['pseudo_Subscription'] == NULL OR $_POST['pass_Subscription1'] == NULL OR $_POST['pass_Subscription2'] == NULL){
-
-	echo 'Vous n\'avez pas rempli tous les champs';
-
-	} else {
-		// On rend inoffensives les balises HTML que le visiteur a pu rentrer
-		$pseudo = htmlspecialchars($_POST['pseudo_Subscription']);
-		$pass_Subscription1 = $_POST['pass_Subscription1'];
-		$pass_Subscription2 = $_POST['pass_Subscription2'];
-
-		if($pass_Subscription1 == $pass_Subscription2){
-
-			// Hachage du mot de passe
-			$pass_hache = password_hash($pass_Subscription1, PASSWORD_DEFAULT);
-
-		    $loginManager = new \OpenClassrooms\sitesPHP\projet4\model\loginManager();
-
-		    $affectedLogin = $loginManager->insertLoginAndPass($login, $pass_hache);
-
-		    if ($affectedLogin === false) {
-		        throw new Exception('Impossible d\'ajouter le nouvel administrateur !');
-		    }
-		    else {
-		        header('Location: index.php?action=formConnexionAdmin');
-		    }
-		} else {
-			echo 'les mots de passe ne sont pas identiques';
-		}
-	}
-}
 function connexionAdmin()
 {   
     if ($_POST['pseudo_Connexion'] == NULL OR $_POST['pass_Connexion'] == NULL){

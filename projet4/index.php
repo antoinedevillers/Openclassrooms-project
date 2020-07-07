@@ -56,19 +56,11 @@ try { // On essaie de faire des choses
                     // Autre exception
                     throw new Exception('Tous les champs ne sont pas remplis !');
                 }
-
-        } else if ($_GET['action'] == 'formInscriptionAdmin')  {
-            formInscriptionAdmin();
-
         } else if ($_GET['action'] == 'connexionAdmin') {
             connexionAdmin();
 
         } else if ($_GET['action'] == 'deconnexionAdmin') {
             deconnexionAdmin();
-
-        } else if ($_GET['action'] == 'sessionAdmin') {
-            sessionAdmin();
-
         } else if ($_GET['action'] == 'formConnexionAdmin'){
             formConnexionAdmin();
         } else if ($_GET['action'] == 'formPost'){

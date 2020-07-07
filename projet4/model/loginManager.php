@@ -5,19 +5,7 @@ namespace Openclassrooms\sitesPHP\projet4\model;
 require_once("model/Manager.php");
 
 class LoginManager extends Manager
-{
-	public function insertLoginAndPass($login, $pass_hache)
-	{	
-		$db = $this->dbConnect();
-		$req = $db->prepare('INSERT INTO login(login, pass) VALUES(:login, :pass)');
-		$req->execute(array(
-		    'login' => $login,
-		    'pass' => $pass_hache,
-		    ));
-		return $req;
-			
-	}
-	
+{	
     public function getLoginAndPass()
     {
 		$db = $this->dbConnect();
