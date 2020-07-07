@@ -1,6 +1,7 @@
 <?php
-require('controller/frontend.php');
-
+session_start();
+require ('controller/frontend.php');
+require ('controller/backend.php');
 try { // On essaie de faire des choses
     if (isset($_GET['action'])) {
         if ($_GET['action'] == 'listPosts') {
@@ -46,7 +47,32 @@ try { // On essaie de faire des choses
             else {
             // Autre exception
             throw new Exception('Aucun identifiant de commentaire');
-            }  
+            }
+        } else if ($_GET['action'] == 'addAdmin'){
+            if (!empty($_POST['pseudo_Subscription']) && !empty($_POST['pass_Subscription1']) && !empty($_POST['pass_Subscription2'])) {
+                    addAdmin($_POST['pseudo_Subscription'], $_POST['pass_Subscription1']);
+                }
+                else {
+                    // Autre exception
+                    throw new Exception('Tous les champs ne sont pas remplis !');
+                }
+
+        } else if ($_GET['action'] == 'formInscriptionAdmin')  {
+            formInscriptionAdmin();
+
+        } else if ($_GET['action'] == 'connexionAdmin') {
+            connexionAdmin();
+
+        } else if ($_GET['action'] == 'deconnexionAdmin') {
+            deconnexionAdmin();
+
+        } else if ($_GET['action'] == 'sessionAdmin') {
+            sessionAdmin();
+
+        } else if ($_GET['action'] == 'formConnexionAdmin'){
+            formConnexionAdmin();
+        } else if ($_GET['action'] == 'formPost'){
+            formPost();
         }
     }
     else {

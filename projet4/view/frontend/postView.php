@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Mon blog</title>
-        <link href="style.css" rel="stylesheet" /> 
-    </head>
-        
-    <body>
-        <h1>Mon super blog !</h1>
+<?php $title = 'Mon blog'; ?>
+
+<?php ob_start(); ?>
+
         <p><a href="index.php">Retour à la liste des billets</a></p>
 
         <div class="news">
@@ -49,5 +43,6 @@
                 <input type="submit" />
             </div>
         </form>
-    </body>
-</html>
+<?php $content = ob_get_clean(); ?>
+
+<?php require('template.php'); ?>

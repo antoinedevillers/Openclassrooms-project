@@ -1,14 +1,31 @@
 <?php $title = 'Mon blog'; ?>
 
 <?php ob_start(); ?>
-<h1>Mon super blog !</h1>
-<p>Derniers billets du blog :</p>
+
+<section id='billet'>
+    
+    <?php
+
+    // SI je suis connecté en tant qu'admin, le formulaire pour ajouter un billet s'affichera
+    if(isset($_SESSION['id']) AND isset($_SESSION['login']))
+    {
+        echo 'Bienvenue ' . $_SESSION['login'] . ' en tant qu\'administrateur';
+    ?>
+
+        <p><a href=index.php?action=deconnexionAdmin> Deconnexion</a></p>
+        <p><a href=index.php?action=addPost> Ajouter un billet</a><p>
+    <?php
+        
+    }
+    ?>
+    <h1> Billet simple pour l'Alaska </h1>
+    <p>Derniers billets du blog :</p>
 
 
-<?php
-while ($data = $posts->fetch())
-{
-?>
+    <?php
+    while ($data = $posts->fetch())
+    {
+    ?>
     <div class="news">
         <h3>
             <?= htmlspecialchars($data['title']) ?>
@@ -21,10 +38,12 @@ while ($data = $posts->fetch())
             <em><a href="index.php?action=post&amp;id=<?= $data['id'] ?>">Commentaires</a></em>
         </p>
     </div>
-<?php
+
+    <?php
 }
 $posts->closeCursor();
 ?>
+</section>
 <?php $content = ob_get_clean(); ?>
 
 <?php require('template.php'); ?>

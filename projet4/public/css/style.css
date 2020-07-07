@@ -1,0 +1,37 @@
+body {
+	text-align: center;
+
+}
+h1 {
+	text-align: center;
+}
+header{
+	position: relative;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    position: fixed;
+
+    color: white;
+    width: 100%;
+    top: 0;
+}
+nav li {
+    list-style: none;
+    display: inline;
+    padding: 20px;
+}
+section {
+	padding-top: 100px;
+	max-width: 70%;
+
+}
+#formulaireAdministrateur{
+	padding-top: 100px;
+}
+footer{
+	padding: 7%;
+	border-top: 1px solid black;
+}

@@ -62,5 +62,14 @@ function changeComment($id, $comment)
         header('Location: index.php?action=post&id='. $_POST['postId']);
     } 
 }
+function formConnexionAdmin()
+{
+    require ('view/frontend/formConnexionAdmin.php');
+}
+
+function formInscriptionAdmin()
+{
+    require ('view/frontend/formInscription.php');
+}
 
 
