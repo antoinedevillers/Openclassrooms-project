@@ -21,7 +21,7 @@
                     {?>
                     <li><a href=index.php?action=deconnexionAdmin> Deconnexion</a></li>
                     <li><a href=index.php?action=addPost> Ajouter un billet</a></li>
-                    <li><a href=''>Commentaires signalés</a></li>
+                    <li><a href='index.php?action=reportedComments'>Commentaires signalés</a></li>
                     <?php
                     }
                     ?>

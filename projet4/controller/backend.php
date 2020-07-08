@@ -77,4 +77,13 @@ setcookie('pass', '');
 
 header('Location: index.php?action=listPosts');
 }
+
+function reportedComments()
+{
+    $commentManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\CommentManager();
+
+    $reportedComments = $commentManager->getCommentReported();
+    
+    require ('view/backend/reportedComments.php'); 
+}
 }

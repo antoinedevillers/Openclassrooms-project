@@ -27,6 +27,7 @@
             
         <?php
         }
+        $comments->closeCursor();
         ?>
         <h2> Ajouter un commentaire </h2>
         <form action="index.php?action=addComment&amp;id=<?= $post['id'] ?>" method="post">

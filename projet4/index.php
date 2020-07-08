@@ -97,6 +97,9 @@ try { // On essaie de faire des choses
             // Autre exception
             throw new Exception('Aucun identifiant de commentaire');
             }   
+        } else if ($_GET['action'] == 'reportedComments'){
+            $backend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\backend();
+            $reportedComments = $backend->reportedComments();
         }
 
     } else {
