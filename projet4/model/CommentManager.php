@@ -35,10 +35,33 @@ class CommentManager extends Manager
     }
     public function editComment($id, $comment)
     {
-       $db = $this->dbConnect();
+        $db = $this->dbConnect();
         $comments = $db->prepare('UPDATE comments SET comment = ?, comment_date = NOW() WHERE id = ?');
         $modifiedLines = $comments->execute(array($comment, $id));
 
         return $modifiedLines; 
+    }
+    function insertReport($id){
+        $db = $this->dbConnect();
+        $comments = $db->prepare('INSERT INTO comments(comment_report) VALUES(1) WHERE id =?');
+        $reportComment = $comments->execute(array($id));
+
+        return $reportComment;
+    }
+    function countCommentReported($commentReported){
+        $db = $this->dbConnect();
+        // On récupère le nombre de signalements par commentaire
+        $req = $db->prepare('SELECT count(*) FROM membres WHERE comment_report = :comment_report')or die(print_r($db->errorInfo()));
+        $req->execute(array(
+            'comment_report'=>$commentReported
+        ));
+    return $req;
+    }
+    function getCommentReported(){
+        $db = $this->dbConnect();
+    // On récupère les commentaires signalés 
+        $req = $db->prepare('SELECT id, post_id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE comment_report > 0');
+       
+    return $req;
     }
 }

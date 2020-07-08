@@ -65,6 +65,26 @@ function changeComment($id, $comment)
         header('Location: index.php?action=post&id='. $_POST['postId']);
     } 
 }
+function formReport()
+{   
+    $commentManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\CommentManager();
+
+    $comment = $commentManager->getComment($_GET['id']);
+    require('view/frontend/formReport.php');
+}
+function reportComment($id)
+{
+    $commentManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\CommentManager();
+
+    $reportComment = $commentManager->insertReport($id); 
+    if ($reportComment === false) {
+        throw new Exception('Impossible de signaler le commentaire..');
+    }
+    else {
+        header('Location: index.php?action=post&id='. $_POST['postId']);
+    } 
+       
+}
 function formConnexionAdmin()
 {
     require ('view/frontend/formConnexionAdmin.php');

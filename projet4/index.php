@@ -79,18 +79,29 @@ try { // On essaie de faire des choses
             $formChangePost = $backend->formChangePost();
 
         } else if ($_GET['action'] == 'changePost'){
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
-                
-                    $backend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\backend();
-                    $changePost = $backend->changePost($_POST['title'],$_POST['content'], $_GET['id']);
+            if (isset($_GET['id']) && $_GET['id'] > 0) {                
+                $backend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\backend();
+                $changePost = $backend->changePost($_POST['title'],$_POST['content'], $_GET['id']);
                 
             }
+        } else if ($_GET['action'] == 'formReport'){
+            $frontend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\frontend();
+            $formReport = $frontend->formReport();
+
+        } else if ($_GET['action'] == 'reportComment'){
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
+                $frontend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\frontend();
+                $reportComment = $frontend->reportComment($_GET['id']);
+            } 
+            else {
+            // Autre exception
+            throw new Exception('Aucun identifiant de commentaire');
+            }   
         }
 
     } else {
         $frontend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\frontend();
-
-            $listPosts = $frontend->listPosts();
+        $listPosts = $frontend->listPosts();
     }
 }
 catch(Exception $e) { // S'il y a eu une erreur, alors...

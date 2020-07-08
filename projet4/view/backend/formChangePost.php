@@ -2,7 +2,7 @@
 
 <?php ob_start(); ?>
 
-<p><a href="index.php">Retour à la liste des billets</a></p>
+
 
     <div class="news">
         <h3>
@@ -29,7 +29,7 @@
             <input type="submit" value="Envoyer les modifications"/>
         </div>
     </form>
-
+<p><a href="index.php">Retour à la liste des billets</a></p>
 <?php $content = ob_get_clean(); ?>
 
 <?php require('view/frontend/template.php'); ?>

@@ -2,8 +2,7 @@
 
 <?php ob_start(); ?>
 
-        <p><a href="index.php">Retour à la liste des billets</a></p>
-
+        
         <div class="news">
             <h3>
                 <?= htmlspecialchars($post['title']) ?>
@@ -21,7 +20,7 @@
         while ($comment = $comments->fetch())
         {
         ?>
-            <p><strong><?= htmlspecialchars($comment['author']) ?></strong> le <?= $comment['comment_date_fr'] ?> (<a href='index.php?action=comment&amp;id=<?= $comment['id'] ?>' > modifier</a>) </p>
+            <p><strong><?= htmlspecialchars($comment['author']) ?></strong> le <?= $comment['comment_date_fr'] ?> (<a href='index.php?action=formReport&amp;id=<?= $comment['id'] ?>' title ='signaler le commentaire'> /!\ </a>) </p>
             <p><?= nl2br(htmlspecialchars($comment['comment'])) ?></p>
 
 
@@ -43,6 +42,8 @@
                 <input type="submit" />
             </div>
         </form>
+        <p><a href="index.php">Retour à la liste des billets</a></p>
+
 <?php $content = ob_get_clean(); ?>
 
 <?php require('template.php'); ?>
