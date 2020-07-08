@@ -82,6 +82,7 @@ function reportComment($id)
     }
     else {
         header('Location: index.php?action=post&id='. $_POST['postId']);
+        echo 'Votre requête de signalement a bien été envoyé à l\'administrateur du site';
     } 
        
 }

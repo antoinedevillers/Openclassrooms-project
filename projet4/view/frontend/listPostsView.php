@@ -4,19 +4,6 @@
 
 <section id='billet'>
     
-    <?php
-
-    if(isset($_SESSION['id']) AND isset($_SESSION['login']))
-    {
-        echo 'Bienvenue dans l\'espace d\'administration';
-    ?>
-
-        <p><a href=index.php?action=deconnexionAdmin> Deconnexion</a></p>
-        <p><a href=index.php?action=addPost> Ajouter un billet</a><p>
-    <?php
-        
-    }
-    ?>
     <h1> Billet simple pour l'Alaska </h1>
     <p>Derniers billets du blog :</p>
 

@@ -15,8 +15,17 @@
                     {?>
     				<li><a href='index.php?action=formConnexionAdmin' >Connexion Administration</a></li>
                     <?php
+
+                    }
+                    if(isset($_SESSION['id']) AND isset($_SESSION['login']))
+                    {?>
+                    <li><a href=index.php?action=deconnexionAdmin> Deconnexion</a></li>
+                    <li><a href=index.php?action=addPost> Ajouter un billet</a></li>
+                    <li><a href=''>Commentaires signalés</a></li>
+                    <?php
                     }
                     ?>
+
     			</ul>
     		</nav>
     	</header>

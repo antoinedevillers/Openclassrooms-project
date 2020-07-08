@@ -43,7 +43,7 @@ class CommentManager extends Manager
     }
     function insertReport($id){
         $db = $this->dbConnect();
-        $comments = $db->prepare('INSERT INTO comments(comment_report) VALUES(1) WHERE id =?');
+        $comments = $db->prepare('UPDATE comments SET comment_report = 1 WHERE id = ?');
         $reportComment = $comments->execute(array($id));
 
         return $reportComment;
