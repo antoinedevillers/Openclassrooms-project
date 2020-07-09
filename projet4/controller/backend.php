@@ -37,7 +37,7 @@ function addPost($title, $content)
         throw new Exception('Impossible d\'ajouter le billet !');
     }
     else {
-        header('Location: index.php?');
+        header('Location: index.php');
     }
 }
 function deletePost ($id)
@@ -110,4 +110,31 @@ function reportedComments()
 
     require ('view/backend/reportedComments.php'); 
 }
+function deleteComment($id)
+{
+	$commentManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\CommentManager();
+
+    $deleteComment = $commentManager->eraseComment($id);
+
+    if ($deleteComment === false) {
+        throw new Exception('Impossible de supprimer le commentaire !');
+    }
+    else {
+        header('Location: index.php?action=reportedComments');
+    } 
+}
+function allowComment($id)
+{
+	$commentManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\CommentManager();
+
+    $allowComment = $commentManager->allowCommentReported($id);
+
+    if ($allowComment === false) {
+        throw new Exception('Impossible d\'autoriser le commentaire !');
+    }
+    else {
+        header('Location: index.php?action=reportedComments');
+    }
+}
+
 }
