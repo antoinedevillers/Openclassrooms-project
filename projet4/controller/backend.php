@@ -25,7 +25,7 @@ function changePost( $title, $content,$id)
         throw new Exception('Impossible de modifier le commentaire !');
     }
     else {
-        header('Location: index.php?action=post&id='. $_GET['id']);
+        header('Location: index.php?action=formChangePost&id='. $_GET['id']);
     } 
 }
 function connexionAdmin()
@@ -83,7 +83,7 @@ function reportedComments()
     $commentManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\CommentManager();
 
     $reportedComments = $commentManager->getCommentReported();
-    
+
     require ('view/backend/reportedComments.php'); 
 }
 }

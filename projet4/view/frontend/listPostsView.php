@@ -19,7 +19,7 @@
             <?php if(isset($_SESSION['id']) AND isset($_SESSION['login']))
                     {
                     ?>
-                    <p><a href="index.php?action=formChangePost&amp;id=<?= $data['id'] ?>" >Modifier le billet</a></p>
+                    <a href="index.php?action=formChangePost&amp;id=<?= $data['id'] ?>" >Modifier </a>
                     <?php
                 }    
     ?>

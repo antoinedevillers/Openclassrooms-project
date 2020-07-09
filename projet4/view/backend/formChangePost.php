@@ -23,7 +23,7 @@
         </div>
         <div>
             <label for="post">Contenu</label><br />
-            <textarea id="post" name="post"></textarea>
+            <textarea id="content" name="content"></textarea>
         </div>
         <div>
             <input type="submit" value="Envoyer les modifications"/>

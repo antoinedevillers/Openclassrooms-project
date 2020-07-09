@@ -35,7 +35,7 @@ public function insertPost($title, $content)
 public function editPost( $title, $content, $id)
     {
        $db = $this->dbConnect();
-        $comments = $db->prepare('UPDATE posts SET title = ?, content = ?, comment_date = NOW() WHERE id = ?');
+        $comments = $db->prepare('UPDATE posts SET title = ?, content = ?, creation_date = NOW() WHERE id = ?');
         $modifiedPost = $comments->execute(array($title, $content, $id));
 
         return $modifiedPost; 
