@@ -26,7 +26,7 @@ public function getPost($postId)
 public function insertPost($title, $content)
     {
         $db = $this->dbConnect();
-        $posts = $db->prepare('INSERT INTO posts(title, content, comment_date) VALUES(?, ?, NOW())');
+        $posts = $db->prepare('INSERT INTO posts(title, content, creation_date) VALUES(?, ?, NOW())');
         $affectedPost = $posts->execute(array($title, $content));
 
         return $affectedPost;

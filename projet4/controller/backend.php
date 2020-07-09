@@ -5,11 +5,6 @@ require_once('model/loginManager.php');
 
 class Backend
 {
-
-function formCreatePost()
-{
-	require('view/backend/formCreatePost.php');
-}
 function formChangePost()
 
 {	$postManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\PostManager();
@@ -26,6 +21,35 @@ function changePost( $title, $content,$id)
     }
     else {
         header('Location: index.php?action=formChangePost&id='. $_GET['id']);
+    } 
+}
+function formCreatePost()
+{
+	require('view/backend/formCreatePost.php');
+}
+function addPost($title, $content)
+{
+    $postManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\PostManager();
+
+    $affectedPost = $postManager->insertPost($title, $content);
+
+    if ($affectedPost === false) {
+        throw new Exception('Impossible d\'ajouter le billet !');
+    }
+    else {
+        header('Location: index.php?');
+    }
+}
+function deletePost ($id)
+{
+	$postManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\PostManager();
+
+	$deletePost = $postManager->erasePost($id);
+	if ($deletePost === false) {
+        throw new Exception('Impossible de supprimer le commentaire !');
+    }
+    else {
+        header('Location: index.php');
     } 
 }
 function connexionAdmin()

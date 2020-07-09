@@ -84,6 +84,26 @@ try { // On essaie de faire des choses
                 $changePost = $backend->changePost($_POST['title'],$_POST['content'], $_GET['id']);
                 
             }
+        } else if($_GET['action'] == 'formCreatePost'){       
+                $backend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\backend();
+                $formCreatePost = $backend->formCreatePost();
+                
+        } elseif ($_GET['action'] == 'addPost') {
+                if (!empty($_POST['title']) && !empty($_POST['content'])) {
+                    $backend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\backend();
+
+                    $addPost = $backend->addPost($_POST['title'], $_POST['content']);
+                }
+                else {
+                    // Autre exception
+                    throw new Exception('Tous les champs ne sont pas remplis !');
+                }
+        } else if ($_GET['action'] == 'deletePost'){
+            if (isset($_GET['id']) && $_GET['id'] > 0) {                
+                $backend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\backend();
+                $changePost = $backend->deletePost($_GET['id']);
+                
+            }
         } else if ($_GET['action'] == 'formReport'){
             $frontend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\frontend();
             $formReport = $frontend->formReport();

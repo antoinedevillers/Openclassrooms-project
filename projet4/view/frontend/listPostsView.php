@@ -19,7 +19,8 @@
             <?php if(isset($_SESSION['id']) AND isset($_SESSION['login']))
                     {
                     ?>
-                    <a href="index.php?action=formChangePost&amp;id=<?= $data['id'] ?>" >Modifier </a>
+                    <a href="index.php?action=formChangePost&amp;id=<?= $data['id'] ?>" >Modifier </a> /
+                    <a href="index.php?action=deletePost&amp;id=<?= $data['id'] ?>" >Supprimer </a>
                     <?php
                 }    
     ?>

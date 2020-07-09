@@ -22,7 +22,7 @@
             <input type="text" id="title" name="title" />
         </div>
         <div>
-            <label for="post">Contenu</label><br />
+            <label for="content">Contenu</label><br />
             <textarea id="content" name="content"></textarea>
         </div>
         <div>

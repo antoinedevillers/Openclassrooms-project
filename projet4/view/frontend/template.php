@@ -20,7 +20,7 @@
                     if(isset($_SESSION['id']) AND isset($_SESSION['login']))
                     {?>
                     <li><a href=index.php?action=deconnexionAdmin> Deconnexion</a></li>
-                    <li><a href=index.php?action=addPost> Ajouter un billet</a></li>
+                    <li><a href=index.php?action=formCreatePost> Ajouter un billet</a></li>
                     <li><a href='index.php?action=reportedComments'>Commentaires signalés</a></li>
                     <?php
                     }
