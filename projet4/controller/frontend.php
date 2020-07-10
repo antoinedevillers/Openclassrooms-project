@@ -1,5 +1,8 @@
 <?php
 namespace Openclassrooms\sitesPHP\Openclassroomsproject\projet4\controller;
+
+use \Openclassrooms\sitesPHP\Openclassroomsproject\projet4\model\PostManager;
+use \Openclassrooms\sitesPHP\Openclassroomsproject\projet\model\CommentManager;
 // Chargement des classes
 require_once('model/PostManager.php');
 require_once('model/CommentManager.php');
@@ -7,18 +10,18 @@ require_once('model/CommentManager.php');
 class Frontend
 {
 
-function listPosts()
+public function listPosts()
 {
-    $postManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\PostManager();
+    $postManager = new PostManager();
     $posts = $postManager->getPosts();
 
     require('view/frontend/listPostsView.php');
 }
 
-function post()
+public function post()
 {
-    $postManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\PostManager();
-    $commentManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\CommentManager();
+    $postManager = new PostManager();
+    $commentManager = new CommentManager();
 
     $post = $postManager->getPost($_GET['id']);
     $comments = $commentManager->getComments($_GET['id']);
@@ -26,9 +29,9 @@ function post()
     require('view/frontend/postView.php');
 }
 
-function addComment($postId, $author, $comment)
+public function addComment($postId, $author, $comment)
 {
-    $commentManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\CommentManager();
+    $commentManager = new CommentManager();
 
     $affectedLines = $commentManager->addPostComment($postId, $author, $comment);
 
@@ -40,11 +43,11 @@ function addComment($postId, $author, $comment)
     }
 }
 
-function comment($id)
+public function comment($id)
 {
    //On récupère le commentaire
-    $postManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\PostManager();
-    $commentManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\CommentManager();
+    $postManager = new PostManager();
+    $commentManager = new CommentManager();
 
     $comment = $commentManager->getComment($_GET['id']);
     
@@ -52,9 +55,9 @@ function comment($id)
    
 }
 
-function changeComment($id, $comment)
+public function changeComment($id, $comment)
 {   
-    $commentManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\CommentManager();
+    $commentManager = new CommentManager();
 
     $modifiedLines = $commentManager->editComment($id, $comment);
 
@@ -65,16 +68,16 @@ function changeComment($id, $comment)
         header('Location: index.php?action=post&id='. $_POST['postId']);
     } 
 }
-function formReport()
+public function formReport()
 {   
-    $commentManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\CommentManager();
+    $commentManager = new CommentManager();
 
     $comment = $commentManager->getComment($_GET['id']);
     require('view/frontend/formReport.php');
 }
-function reportComment($id)
+public function reportComment($id)
 {
-    $commentManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\CommentManager();
+    $commentManager = new CommentManager();
 
     $reportComment = $commentManager->insertReport($id); 
     if ($reportComment === false) {
@@ -85,7 +88,7 @@ function reportComment($id)
     } 
        
 }
-function formConnexionAdmin()
+public function formConnexionAdmin()
 {
     require ('view/frontend/formConnexionAdmin.php');
 }

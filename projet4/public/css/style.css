@@ -1,3 +1,4 @@
+/*Général*/
 body {
 	text-align: center;
 	background-color: #d3d3d3;
@@ -10,6 +11,11 @@ header{
 	height:80px;
 
 }
+h3 a {
+	text-decoration: none;
+	color:black;
+}
+/*Menu*/
 
 nav {
     display: flex;
@@ -25,21 +31,34 @@ nav li {
     display: inline;
     padding: 20px;
 }
-div .imageTitle{
+nav a {
+ 
+    color: black;
+    text-decoration: none;
+
+}
+nav a:hover{
+	color: #5C5C5C;
+	text-decoration: underline;
+}
+
+.imageTitle{
 	width: 100%; 
-	background-color: red;
-    position: relative;
-    background-image: url('public/images/image1.jpg');
+
+    background-image: url('../images/image1.jpg');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
 	
 }
+/* Page listPostView */
 section {
 
 	max-width: 60%;
 	display: inline-block;
 
+}
+.container_post_features{
+	display: inline-block;
 }
 #formulaireAdministrateur{
 

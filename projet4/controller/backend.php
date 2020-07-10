@@ -1,5 +1,9 @@
 <?php
 namespace Openclassrooms\sitesPHP\Openclassroomsproject\projet4\controller;
+
+use \Openclassrooms\sitesPHP\Openclassroomsproject\projet4\model\PostManager;
+use \Openclassrooms\sitesPHP\Openclassroomsproject\projet4\model\loginManager;
+use \Openclassrooms\sitesPHP\Openclassroomsproject\projet4\model\CommentManager;
 // Chargement des classes
 require_once('model/loginManager.php');
 
@@ -7,13 +11,13 @@ class Backend
 {
 function formChangePost()
 
-{	$postManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\PostManager();
+{	$postManager = new PostManager();
 	$post = $postManager->getPost($_GET['id']);
 	require('view/backend/formChangePost.php');
 }
 function changePost( $title, $content,$id)
 {
-	$postManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\PostManager();
+	$postManager = new PostManager();
 
 	$modifiedPost = $postManager->editPost( $title, $content, $id);
 	if ($modifiedPost === false) {
@@ -29,7 +33,7 @@ function formCreatePost()
 }
 function addPost($title, $content)
 {
-    $postManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\PostManager();
+    $postManager = new PostManager();
 
     $affectedPost = $postManager->insertPost($title, $content);
 
@@ -42,7 +46,7 @@ function addPost($title, $content)
 }
 function deletePost ($id)
 {
-	$postManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\PostManager();
+	$postManager = new PostManager();
 
 	$deletePost = $postManager->erasePost($id);
 	if ($deletePost === false) {
@@ -59,7 +63,7 @@ function connexionAdmin()
         echo 'Vous n\'avez pas rempli tous les champs';
 
 	} else {
-		$loginManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\loginManager();
+		$loginManager = new loginManager();
 
 		$req = $loginManager->getLoginAndPass();
 		$resultat = $req->fetch();
@@ -104,7 +108,7 @@ header('Location: index.php?action=listPosts');
 
 function reportedComments()
 {
-    $commentManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\CommentManager();
+    $commentManager = new CommentManager();
 
     $reportedComments = $commentManager->getCommentReported();
 
@@ -112,7 +116,7 @@ function reportedComments()
 }
 function deleteComment($id)
 {
-	$commentManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\CommentManager();
+	$commentManager = new CommentManager();
 
     $deleteComment = $commentManager->eraseComment($id);
 
@@ -125,7 +129,7 @@ function deleteComment($id)
 }
 function allowComment($id)
 {
-	$commentManager = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\model\CommentManager();
+	$commentManager = new CommentManager();
 
     $allowComment = $commentManager->allowCommentReported($id);
 

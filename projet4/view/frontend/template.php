@@ -16,23 +16,21 @@
     <body>
     	<header>
     		<nav>
-    			<ul>
-    				
+    			<ul>   				
                     <?php if(!isset($_SESSION['id']) AND !isset($_SESSION['login']))
-                    {?>
-                    <li><a href='index.php'>Accueil<a></li>
-    				<li><a href='index.php?action=formConnexionAdmin' >Connexion Administration</a></li>
+                    {?> <p>Bienvenue sur le blog de Jean Fourterouche</p>
+                        <li><a href='index.php'>Accueil<a></li>
+        				<li><a href='index.php?action=formConnexionAdmin' >Connexion Administration</a></li>
                     <?php
 
                     }
                     if(isset($_SESSION['id']) AND isset($_SESSION['login']))
                     {?>
-                    <p>Bienvenue dans l'interface d'administration</p>
-                    <li><a href='index.php'>Accueil<a></li>
-                    <li><a href=index.php?action=formCreatePost> Ajouter un billet</a></li>
-                    <li><a href='index.php?action=reportedComments'>Commentaires signalés</a></li>
-                    <li><a href=index.php?action=deconnexionAdmin> Deconnexion</a></li>
-
+                        <p>Bienvenue dans l'interface d'administration</p>
+                        <li><a href='index.php'>Accueil<a></li>
+                        <li><a href=index.php?action=formCreatePost> Ajouter un billet</a></li>
+                        <li><a href='index.php?action=reportedComments'>Commentaires signalés</a></li>
+                        <li><a href=index.php?action=deconnexionAdmin> Deconnexion</a></li>
                     <?php
                     }
                     ?>

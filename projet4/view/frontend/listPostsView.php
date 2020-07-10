@@ -13,23 +13,25 @@
     ?>
 
     <div class="news">
-        <h3>
-            <?= htmlspecialchars($data['title']) ?>
-            <em>le <?= $data['creation_date_fr'] ?></em>
-            <?php if(isset($_SESSION['id']) AND isset($_SESSION['login']))
+        <div class="container_post_features">
+          <h3><a href="index.php?action=post&amp;id=<?= $data['id'] ?>"><?= htmlspecialchars($data['title']) ?></a></h3> 
+            <i>( mis à jour le <?= $data['creation_date_fr'] ?> )
+                <?php if(isset($_SESSION['id']) AND isset($_SESSION['login']))
                     {
                     ?>
                     <a href="index.php?action=formChangePost&amp;id=<?= $data['id'] ?>" >Modifier </a> /
                     <a href="index.php?action=deletePost&amp;id=<?= $data['id'] ?>" >Supprimer </a>
                     <?php
-                }    
-    ?>
-        </h3>
+                     }    
+                    ?>
+            </i>
+        </div>
+        
         
         <p>
-            <?= nl2br(htmlspecialchars($data['content'])) ?>
+            <?= nl2br($data['content']) ?>
             <br />
-            <em><a href="index.php?action=post&amp;id=<?= $data['id'] ?>">Commentaires</a></em>
+            <em><a href="index.php?action=post&amp;id=<?= $data['id'] ?>">Lire la suite</a></em>
         </p>
     </div>
 

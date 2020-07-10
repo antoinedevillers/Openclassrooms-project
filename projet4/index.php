@@ -1,17 +1,21 @@
 <?php
 session_start();
-require ('controller/frontend.php');
-require ('controller/backend.php');
+require ('controller/Frontend.php');
+require ('controller/Backend.php');
+
+use \Openclassrooms\sitesPHP\Openclassroomsproject\projet4\controller\Frontend;
+use \Openclassrooms\sitesPHP\Openclassroomsproject\projet4\controller\Backend;
+
 try { // On essaie de faire des choses
     if (isset($_GET['action'])) {
         if ($_GET['action'] == 'listPosts') {
-            $frontend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\frontend();
+            $frontend = new Frontend();
 
             $listPosts = $frontend->listPosts();
         }
         elseif ($_GET['action'] == 'post') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
-                $frontend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\frontend();
+                $frontend = new Frontend();
 
                 $post = $frontend->post();
             }
@@ -23,7 +27,7 @@ try { // On essaie de faire des choses
         elseif ($_GET['action'] == 'addComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 if (!empty($_POST['author']) && !empty($_POST['comment'])) {
-                    $frontend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\frontend();
+                    $frontend = new Frontend();
 
                     $addComment = $frontend->addComment($_GET['id'], $_POST['author'], $_POST['comment']);
                 }
@@ -36,7 +40,7 @@ try { // On essaie de faire des choses
         elseif ($_GET['action'] == 'changeComment'){
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 if (!empty($_POST['comment'])) {
-                    $frontend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\frontend();
+                    $frontend = new Frontend();
 
                     $changeComment = $frontend->changeComment($_GET['id'], $_POST['comment']);
                 }
@@ -50,7 +54,7 @@ try { // On essaie de faire des choses
             }          
         } else if($_GET['action'] == 'comment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
-                $frontend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\frontend();
+                $frontend = new Frontend();
 
                 $comment = $frontend->comment($_GET['id']);
             } 
@@ -59,38 +63,38 @@ try { // On essaie de faire des choses
             throw new Exception('Aucun identifiant de commentaire');
             }
         } else if ($_GET['action'] == 'connexionAdmin') {
-            $backend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\backend();
+            $backend = new Backend();
             $connexionAdmin = $backend->connexionAdmin();
 
         } else if ($_GET['action'] == 'deconnexionAdmin') {
-            $backend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\backend();
+            $backend = new Backend();
             $deconnexionAdmin = $backend->deconnexionAdmin();
 
         } else if ($_GET['action'] == 'formConnexionAdmin'){
-            $frontend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\frontend();
+            $frontend = new Frontend();
             $formConnexionAdmin = $frontend->formConnexionAdmin();
 
         } else if ($_GET['action'] == 'formPost'){
-            $backend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\backend();
+            $backend = new Backend();
             $formPost = $backend->formPost();
 
         } else if ($_GET['action'] == 'formChangePost'){
-            $backend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\backend();
+            $backend = new Backend();
             $formChangePost = $backend->formChangePost();
 
         } else if ($_GET['action'] == 'changePost'){
             if (isset($_GET['id']) && $_GET['id'] > 0) {                
-                $backend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\backend();
+                $backend = new Backend();
                 $changePost = $backend->changePost($_POST['title'],$_POST['content'], $_GET['id']);
                 
             }
         } else if($_GET['action'] == 'formCreatePost'){       
-                $backend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\backend();
+                $backend = new Backend();
                 $formCreatePost = $backend->formCreatePost();
                 
         } elseif ($_GET['action'] == 'addPost') {
                 if (!empty($_POST['title']) && !empty($_POST['content'])) {
-                    $backend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\backend();
+                    $backend = new Backend();
 
                     $addPost = $backend->addPost($_POST['title'], $_POST['content']);
                 }
@@ -100,17 +104,17 @@ try { // On essaie de faire des choses
                 }
         } else if ($_GET['action'] == 'deletePost'){
             if (isset($_GET['id']) && $_GET['id'] > 0) {                
-                $backend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\backend();
+                $backend = new Backend();
                 $deletePost = $backend->deletePost($_GET['id']);
                 
             }
         } else if ($_GET['action'] == 'formReport'){
-            $frontend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\frontend();
+            $frontend = new Frontend();
             $formReport = $frontend->formReport();
 
         } else if ($_GET['action'] == 'reportComment'){
             if (isset($_GET['id']) && $_GET['id'] > 0) {
-                $frontend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\frontend();
+                $frontend = new Frontend();
                 $reportComment = $frontend->reportComment($_GET['id']);
             } 
             else {
@@ -118,23 +122,23 @@ try { // On essaie de faire des choses
             throw new Exception('Aucun identifiant de commentaire');
             }   
         } else if ($_GET['action'] == 'reportedComments'){
-            $backend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\backend();
+            $backend = new Backend();
             $reportedComments = $backend->reportedComments();
 
         } else if ($_GET['action'] == 'deleteComment'){
             if (isset($_GET['id']) && $_GET['id'] > 0) {                
-                $backend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\backend();
+                $backend = new Backend();
                 $deleteComment = $backend->deleteComment($_GET['id']);
                } 
             
         } else if ($_GET['action'] == 'allowComment'){
             if (isset($_GET['id']) && $_GET['id'] > 0) {                
-                $backend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\backend();
+                $backend = new Backend();
                 $allowComment = $backend->allowComment($_GET['id']);
                } 
             }
     } else {
-        $frontend = new \OpenClassrooms\sitesPHP\Openclassroomsproject\projet4\controller\frontend();
+        $frontend = new Frontend();
         $listPosts = $frontend->listPosts();
     }
 }
