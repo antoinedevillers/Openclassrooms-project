@@ -4,7 +4,6 @@
 
 <section id='billet'>
     
-    <h1> Billet simple pour l'Alaska </h1>
     <p>Derniers billets du blog :</p>
 
 
@@ -12,6 +11,7 @@
     while ($data = $posts->fetch())
     {
     ?>
+
     <div class="news">
         <h3>
             <?= htmlspecialchars($data['title']) ?>

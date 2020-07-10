@@ -17,15 +17,15 @@
 
 <h2> Modifier le billet </h2>
     <form action="index.php?action=changePost&amp;id=<?= $post['id'] ?>" method="post">
-        <div>
+        <div class="inputFormPost">
             <label for="title">Titre</label><br />
-            <input type="text" id="title" name="title" />
+            <input type="text" id="title" name="title" size="80" />
         </div>
-        <div>
+        <div class="inputFormPost">
             <label for="content">Contenu</label><br />
-            <textarea id="content" name="content"></textarea>
+            <textarea id="mytextarea" name="content"></textarea>
         </div>
-        <div>
+        <div class="inputFormPost">
             <input type="submit" value="Envoyer les modifications"/>
         </div>
     </form>

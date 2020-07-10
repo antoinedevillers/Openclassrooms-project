@@ -1,21 +1,23 @@
 body {
 	text-align: center;
-
+	background-color: #d3d3d3;
+	margin:0;
 }
 h1 {
 	text-align: center;
 }
 header{
-	position: relative;
+	height:80px;
+
 }
 
 nav {
     display: flex;
     justify-content: space-around;
     position: fixed;
-
-    color: white;
-
+    background-color: white;
+    color: grey;
+    width:100%;
     top: 0;
 }
 nav li {
@@ -23,15 +25,49 @@ nav li {
     display: inline;
     padding: 20px;
 }
+div .imageTitle{
+	width: 100%; 
+	background-color: red;
+    position: relative;
+    background-image: url('public/images/image1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+	
+}
 section {
-	padding-top: 100px;
-	max-width: 70%;
+
+	max-width: 60%;
+	display: inline-block;
 
 }
 #formulaireAdministrateur{
-	padding-top: 100px;
+
+}
+.news{
+	display:inline-table;
+}
+/* Page postView */
+
+.inputFormPost{
+	margin:20px;
+}
+.containerCommentsAndFormAddComment{
+	display: flex;
+	justify-content: space-around;
+}
+.comments{
+	border: 1px solid black;
+	padding: 0 10px 0 10px;
+
+}
+.formAddComments{
+	border: 1px solid black;
+	padding: 0 10px 0 10px;
+
 }
 footer{
 	padding: 7%;
 	border-top: 1px solid black;
+	background-image: url('public/images/image1.jpg');
 }
