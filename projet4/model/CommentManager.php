@@ -7,13 +7,36 @@ require_once("model/Manager.php");
 class CommentManager extends Manager
 {
     public function getComments($postId)
-    {
+    {   
+        $pageComment = (!empty($_GET['pageComment']) ? $_GET['pageComment'] : 1);
+        $limite = 3;
+        $debut = ($pageComment - 1) * $limite;
         $db = $this->dbConnect();
-        $comments = $db->prepare('SELECT id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE post_id = ? ORDER BY comment_date DESC LIMIT 0, 5');
-        $comments->execute(array($postId));
+        $comments = $db->prepare('SELECT id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE post_id = :post_id ORDER BY comment_date DESC LIMIT :limite OFFSET :debut');
+        $comments->bindParam(':post_id', $postId, \PDO::PARAM_INT);
+        $comments->bindParam(':limite', $limite, \PDO::PARAM_INT);
+        $comments->bindParam(':debut', $debut, \PDO::PARAM_INT);
+        $comments->execute();
 
         return $comments;
+
     }
+    public function countComments()
+{   
+    $pageComment = (!empty($_GET['pageComment']) ? $_GET['pageComment'] : 1);
+    $limite = 3;
+    $debut = ($pageComment - 1) * $limite;
+    $db = $this->dbConnect();
+    /* On commence par récupérer le nombre d'éléments total. Comme c'est une requête,
+     * il ne faut pas oublier qu'on ne récupère pas directement le nombre.
+     * Ici, comme la requête ne contient aucune donnée client pour fonctionner,
+     * on peut l'exécuter ainsi directement */
+    $req = $db->query('SELECT COUNT(id) AS number_comments FROM comments'); 
+    $nombredElementsTotal = $req->fetchColumn(); 
+    /* On calcule le nombre de pages */
+    $nombreDePages = ceil($nombredElementsTotal / $limite);
+    return $nombreDePages;
+}
 
     public function addPostComment($postId, $author, $comment)
     {

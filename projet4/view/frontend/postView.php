@@ -28,7 +28,26 @@
                     
                 <?php
                 }
-                $comments->closeCursor();
+                 $comments->closeCursor();
+                 
+                $pageComment = (!empty($_GET['pageComment']) ? $_GET['pageComment'] : 1);
+                if ($pageComment> 1):
+                    ?><a href="?action=post&amp;id=<?= $post['id']?>&amp;pageComment=<?php echo $pageComment - 1; ?>">Page précédente</a> — <?php
+                endif;
+
+                /* On va effectuer une boucle autant de fois que l'on a de pages */
+                for ($i = 1; $i <= $countComments; $i++):
+                    ?><a href="?action=post&amp;id=<?= $post['id']?>&amp;pageComment=<?php echo $i; ?>"><?php echo $i; ?></a> <?php
+                endfor;
+
+                /* Avec le nombre total de pages, on peut aussi masquer le lien
+                 * vers la page suivante quand on est sur la dernière */
+                if ($pageComment < $countComments):
+                    ?>— <a href="?action=post&amp;id=<?= $post['id']?>&amp;pageComment=<?php echo $pageComment + 1; ?>">Page suivante</a><?php
+                endif;  
+            
+               
+            
                 ?>
             </div>
             <div class='formAddComments'>

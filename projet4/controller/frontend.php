@@ -24,8 +24,10 @@ public function post()
     $postManager = new PostManager();
     $commentManager = new CommentManager();
 
+    $posts = $postManager->getPosts($_GET['id']);
     $post = $postManager->getPost($_GET['id']);
     $comments = $commentManager->getComments($_GET['id']);
+    $countComments=$commentManager->countComments($_GET['id']);
 
     require('view/frontend/postView.php');
 }

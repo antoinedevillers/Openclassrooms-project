@@ -49,13 +49,7 @@
 
     			</ul>
     		</nav>
-            <?php if(!isset($_SESSION['id']) AND !isset($_SESSION['login']))
-            {?> 
-            <div class='imageTitle'>
-            <h1>Billet simple pour l'Alaska</h1>
-            <p id ="anchorLastPosts"><a href='#derniersbillets'>Voir les derniers chapitres<a></p>    
-           <?php
-            }?>
+            
             </div>
     	</header>
         

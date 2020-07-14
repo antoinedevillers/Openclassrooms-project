@@ -2,6 +2,10 @@
 
 <?php ob_start(); ?>
 
+            <div class='imageTitle'>
+            <h1>Billet simple pour l'Alaska</h1>
+            <p id ="anchorLastPosts"><a href='#derniersbillets'>Voir les derniers chapitres<a></p>    
+</div>
 <section id='billet'>
     
     <h2 id='derniersbillets'>Derniers billets du blog :</h2>
@@ -42,7 +46,7 @@ $posts->closeCursor();
  * page que la première */
 
 $page = (!empty($_GET['page']) ? $_GET['page'] : 1);
-if ($countPosts > 1):
+if ($page> 1):
     ?><a href="?page=<?php echo $page - 1; ?>">Page précédente</a> — <?php
 endif;
 
