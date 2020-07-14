@@ -47,18 +47,18 @@ $posts->closeCursor();
 
 $page = (!empty($_GET['page']) ? $_GET['page'] : 1);
 if ($page> 1):
-    ?><a href="?page=<?php echo $page - 1; ?>">Page précédente</a> — <?php
+    ?><a href="?page=<?php echo $page - 1; ?>#derniersbillets">Page précédente</a> — <?php
 endif;
 
 /* On va effectuer une boucle autant de fois que l'on a de pages */
 for ($i = 1; $i <= $countPosts; $i++):
-    ?><a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a> <?php
+    ?><a href="?page=<?php echo $i; ?>#derniersbillets"><?php echo $i; ?></a> <?php
 endfor;
 
 /* Avec le nombre total de pages, on peut aussi masquer le lien
  * vers la page suivante quand on est sur la dernière */
 if ($page < $countPosts):
-    ?>— <a href="?page=<?php echo $page + 1; ?>">Page suivante</a><?php
+    ?>— <a href="?page=<?php echo $page + 1; ?>#derniersbillets">Page suivante</a><?php
 endif;
 
 

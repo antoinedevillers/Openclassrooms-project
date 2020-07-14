@@ -169,6 +169,23 @@ section {
     margin: 10px;
     background-color: rgba(255,255,255,0.5);
 }
+/*Page formReport.php*/
+.formReport{
+	background-color: rgba(255,255,255,0.7);
+    padding: 20px;
+    border: 2px solid black;
+    max-width: 50%;
+    /* align-items: center; */
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+}
+.comment{
+	background-color: rgba(255,255,255,0.8);
+    padding: 5px;
+    margin: 10px;
+}
+}
 footer{
 	padding: 7%;
 	border-top: 1px solid black;
