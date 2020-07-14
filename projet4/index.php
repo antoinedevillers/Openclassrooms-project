@@ -35,23 +35,7 @@ try { // On essaie de faire des choses
                     // Autre exception
                     throw new Exception('Tous les champs ne sont pas remplis !');
                 }
-            }
-         }    
-        elseif ($_GET['action'] == 'changeComment'){
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
-                if (!empty($_POST['comment'])) {
-                    $frontend = new Frontend();
-
-                    $changeComment = $frontend->changeComment($_GET['id'], $_POST['comment']);
-                }
-                else {
-                    // Autre exception
-                    throw new Exception('Tous les champs ne sont pas remplis !');
-                }    
-            }  else {
-            // Autre exception
-            throw new Exception('Aucun identifiant de billet envoyé');
-            }          
+            }            
         } else if($_GET['action'] == 'comment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 $frontend = new Frontend();
@@ -143,5 +127,14 @@ try { // On essaie de faire des choses
     }
 }
 catch(Exception $e) { // S'il y a eu une erreur, alors...
-    echo 'Erreur : ' . $e->getMessage();
+    $errorMessage = $e->getMessage();
+
+    if ($_GET['action'] == 'addComment'){
+        require('view/frontend/errorView.php');
+    } 
+    else if ($_GET['action'] == 'addPost'){
+
+    require('view/backend/formCreatePost.php');
+    }
+
 }

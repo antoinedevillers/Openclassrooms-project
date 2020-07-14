@@ -3,7 +3,7 @@
 <?php ob_start(); ?>
 
 
-
+<section>
     <div class="news">
         <h3>
             <?= htmlspecialchars($post['title']) ?>
@@ -30,6 +30,7 @@
         </div>
     </form>
 <p><a href="index.php">Retour à la liste des billets</a></p>
+</section>
 <?php $content = ob_get_clean(); ?>
 
 <?php require('view/frontend/template.php'); ?>

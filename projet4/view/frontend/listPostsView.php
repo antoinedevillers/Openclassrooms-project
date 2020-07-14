@@ -4,14 +4,13 @@
 
 <section id='billet'>
     
-    <p>Derniers billets du blog :</p>
+    <h2 id='derniersbillets'>Derniers billets du blog :</h2>
 
 
     <?php
     while ($data = $posts->fetch())
     {
     ?>
-
     <div class="news">
         <div class="container_post_features">
           <h3><a href="index.php?action=post&amp;id=<?= $data['id'] ?>"><?= htmlspecialchars($data['title']) ?></a></h3> 
@@ -25,13 +24,12 @@
                      }    
                     ?>
             </i>
+           <p><?php echo substr($data['content'], 0, 500) . '[...]';?><p>
         </div>
         
         
         <p>
-            <?= nl2br($data['content']) ?>
-            <br />
-            <em><a href="index.php?action=post&amp;id=<?= $data['id'] ?>">Lire la suite</a></em>
+            <em><a href="index.php?action=post&amp;id=<?= $data['id'] ?>">Lire le chapitre</a></em>
         </p>
     </div>
 

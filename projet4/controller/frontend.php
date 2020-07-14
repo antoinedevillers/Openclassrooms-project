@@ -2,7 +2,7 @@
 namespace Openclassrooms\sitesPHP\Openclassroomsproject\projet4\controller;
 
 use \Openclassrooms\sitesPHP\Openclassroomsproject\projet4\model\PostManager;
-use \Openclassrooms\sitesPHP\Openclassroomsproject\projet\model\CommentManager;
+use \Openclassrooms\sitesPHP\Openclassroomsproject\projet4\model\CommentManager;
 // Chargement des classes
 require_once('model/PostManager.php');
 require_once('model/CommentManager.php');

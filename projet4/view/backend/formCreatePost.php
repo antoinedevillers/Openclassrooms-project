@@ -1,7 +1,8 @@
 <?php $title = 'Mon blog'; ?>
 
 <?php ob_start(); ?>
-
+<section>
+<?php if (isset($errorMessage)){ echo $errorMessage; }?>
 <h2> Ajouter un nouveau billet </h2>
         <form action="index.php?action=addPost" method="post">
             <div class="inputFormPost">
@@ -16,7 +17,7 @@
                 <input type="submit" value="Ajouter"/>
             </div>
         </form>
-
+</section>
 <?php $content = ob_get_clean(); ?>
 
 <?php require('view/frontend/template.php'); ?>

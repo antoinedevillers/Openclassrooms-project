@@ -1,6 +1,7 @@
 <?php $title = 'Mon blog'; ?>
 
 <?php ob_start(); ?>
+
 <div id="formulaireAdministrateur">
 	<h2> Connexion en tant qu'administrateur </h2>
 	    <form method="post" action="index.php?action=connexionAdmin">
