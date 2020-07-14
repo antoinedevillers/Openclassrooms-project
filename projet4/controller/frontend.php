@@ -14,6 +14,7 @@ public function listPosts()
 {
     $postManager = new PostManager();
     $posts = $postManager->getPosts();
+    $countPosts=$postManager->countPosts();
 
     require('view/frontend/listPostsView.php');
 }
@@ -92,6 +93,9 @@ public function formConnexionAdmin()
 {
     require ('view/frontend/formConnexionAdmin.php');
 }
-
+public function page()
+{   $postManager = new PostManager();
+    $posts = $postManager->countPosts();
+}
 }
 

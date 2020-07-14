@@ -10,7 +10,7 @@ try { // On essaie de faire des choses
     if (isset($_GET['action'])) {
         if ($_GET['action'] == 'listPosts') {
             $frontend = new Frontend();
-
+            
             $listPosts = $frontend->listPosts();
         }
         elseif ($_GET['action'] == 'post') {
@@ -119,8 +119,8 @@ try { // On essaie de faire des choses
             if (isset($_GET['id']) && $_GET['id'] > 0) {                
                 $backend = new Backend();
                 $allowComment = $backend->allowComment($_GET['id']);
-               } 
-            }
+            } 
+        } 
     } else {
         $frontend = new Frontend();
         $listPosts = $frontend->listPosts();
