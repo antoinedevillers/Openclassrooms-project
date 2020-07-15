@@ -18,7 +18,7 @@
     <div class="news">
         <div class="container_post_features">
           <h3><a href="index.php?action=post&amp;id=<?= $data['id'] ?>"><?= htmlspecialchars($data['title']) ?></a></h3> 
-            <i>( mis à jour le <?= $data['creation_date_fr'] ?> )
+            <i>( mis à jour le <?= $data['creation_date_fr'] ?> )</i>
                 <?php if(isset($_SESSION['id']) AND isset($_SESSION['login']))
                     {
                     ?>
@@ -44,25 +44,26 @@ $posts->closeCursor();
 /* Si on est sur la première page, on n'a pas besoin d'afficher de lien
  * vers la précédente. On va donc ne l'afficher que si on est sur une autre
  * page que la première */
-
-$page = (!empty($_GET['page']) ? $_GET['page'] : 1);
-if ($page> 1):
-    ?><a href="?page=<?php echo $page - 1; ?>#derniersbillets">Page précédente</a> — <?php
-endif;
-
-/* On va effectuer une boucle autant de fois que l'on a de pages */
-for ($i = 1; $i <= $countPosts; $i++):
-    ?><a href="?page=<?php echo $i; ?>#derniersbillets"><?php echo $i; ?></a> <?php
-endfor;
-
-/* Avec le nombre total de pages, on peut aussi masquer le lien
- * vers la page suivante quand on est sur la dernière */
-if ($page < $countPosts):
-    ?>— <a href="?page=<?php echo $page + 1; ?>#derniersbillets">Page suivante</a><?php
-endif;
-
-
 ?>
+    <div class='pagination'>
+        <?php
+        $page = (!empty($_GET['page']) ? $_GET['page'] : 1);
+        if ($page> 1):
+            ?><a href="?page=<?php echo $page - 1; ?>#derniersbillets">Page précédente</a> — <?php
+        endif;
+
+        /* On va effectuer une boucle autant de fois que l'on a de pages */
+        for ($i = 1; $i <= $countPosts; $i++):
+            ?><a href="?page=<?php echo $i; ?>#derniersbillets"><?php echo $i; ?></a> <?php
+        endfor;
+
+        /* Avec le nombre total de pages, on peut aussi masquer le lien
+         * vers la page suivante quand on est sur la dernière */
+        if ($page < $countPosts):
+            ?>— <a href="?page=<?php echo $page + 1; ?>#derniersbillets">Page suivante</a><?php
+        endif;
+        ?>
+    </div>
 
 </section>
 <?php $content = ob_get_clean(); ?>

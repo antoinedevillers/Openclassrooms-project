@@ -14,6 +14,7 @@
 		    </form>
 	</div>
 </section>
+<p class='returnListPosts'><a href="index.php#derniersbillets">Retour à la liste des billets</a></p>
 <?php $content = ob_get_clean(); ?>
 
 <?php require('template.php'); ?>

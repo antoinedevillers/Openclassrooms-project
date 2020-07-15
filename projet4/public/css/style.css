@@ -41,6 +41,9 @@ h3 a {
 	color: white;
 	font-weight: bold;
 }
+.pagination a{
+	color:white;
+}
 /*Menu*/
 .messageBienvenue{
 	position: fixed;
@@ -103,7 +106,7 @@ section {
 
 }
 #anchorLastPosts a:hover{
-	color: #5C5C5C;
+
     text-decoration: underline;
 }
 .container_post_features{
@@ -129,7 +132,6 @@ section {
 }
 .containerCommentsAndFormAddComment{
 	display: flex;
-	justify-content: space-around;
 }
 .comments{
 	border: 1px solid black;
@@ -162,13 +164,13 @@ section {
 	background-color: rgba(255,255,255,0.7);
     padding: 20px;
     border: 2px solid black;
-    max-width: 50%;
+    width: 50%;
     position: relative;
     left: 50%;
-    transform: translate(-50%);
+    transform: translate(-50%,50%);
 }
 #sectionConnexionAdmin{
-	height: 300px;
+	height: 420px;
 }
 /* Page ReportedComments*/
 .containerReportedComment{
@@ -182,15 +184,18 @@ section {
 	background-color: rgba(255,255,255,0.7);
     padding: 20px;
     border: 2px solid black;
-    max-width: 50%;
+    width: 50%;
     position: relative;
     left: 50%;
-    transform: translate(-50%);
+    transform: translate(-50%,25%);
 }
 .comment{
 	background-color: rgba(255,255,255,0.8);
     padding: 5px;
     margin: 10px;
+}
+#formReport{
+	height:420px;
 }
 
 footer{
@@ -198,4 +203,96 @@ footer{
 	border-top: 1px solid black;
 	background-color: rgb(229, 230, 232);
 
+}
+/*Responsive max-width 1024px*/
+@media screen and (max-width: 1024px) {
+
+/* Page formConnexionAdmin */
+#sectionConnexionAdmin {
+    height: 320px;
+}
+#formulaireAdministrateur{
+
+transform: translate(-50%,25%);
+}
+}
+/*Responsive max-width 768px*/
+@media screen and (max-width: 768px) {
+
+/*Page ListPostView*/
+.imageTitle{
+	height: 600px;
+    background-position: right;
+}
+/*Page postView*/
+.formAddComments {
+    width: 40%;
+}
+/* Page formConnexionAdmin */
+#formulaireAdministrateur{
+	
+    width: 70%;
+    transform: translate(-50%,50%);
+}
+#sectionConnexionAdmin{
+	height: 450px;
+
+}
+/*Page formCreatePost*/
+#formCreatePost{
+	height: 500px;
+}
+#title{
+	width: -webkit-fill-available;
+
+}
+/*Page formReport*/
+#formReport{
+	height:520px;
+}
+.formReport {
+	width:70%;
+}
+/*Responsive min-width 425px*/
+@media screen and (max-width: 425px) {
+
+/*header*/
+.messageBienvenue{
+	display: none;
+}
+/*Page ListPostView*/
+h1{
+	font-size: 2.5em;
+}
+/*Page postView*/
+.containerCommentsAndFormAddComment{
+	display: block;
+}
+.comments {
+	width:auto;
+}
+.formAddComments {
+    width: auto;
+    border-top: none;
+}
+
+/* Page formConnexionAdmin */
+
+#sectionConnexionAdmin{
+	height: 500px;
+
+}
+/*Page formReport*/
+.formReport {
+    width: 90%;
+}
+}
+/*Responsive min-width 325px*/
+@media screen and (max-width: 325px) {
+
+/* Page formConnexionAdmin */
+#formulaireAdministrateur form{
+	
+    margin:10px;
+}
 }

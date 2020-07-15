@@ -1,7 +1,7 @@
 <?php $title = 'Mon blog'; ?>
 
 <?php ob_start(); ?>
-<section>
+<section id='formReport'>
 	<div class='formReport'>
 		<h2> Signaler ce commentaire </h2>
 		<p>(Je souhaite signaler un commentaire ne respectant pas les règles de ce blog)</p>

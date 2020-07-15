@@ -6,8 +6,9 @@
         <div class="post">
             <h2>
                 <?= $post['title'] ?>
-                <em> (mis à jour le <?= $post['creation_date_fr'] ?>)</em>
+                
             </h2>
+            <i> (mis à jour le <?= $post['creation_date_fr'] ?>)</i>
             
             <p>
                 <?= $post['content']?>

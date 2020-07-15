@@ -1,7 +1,7 @@
 <?php $title = 'Mon blog'; ?>
 
 <?php ob_start(); ?>
-<section>
+<section id='formCreatePost'>
     
     <h2> Ajouter un nouveau billet </h2>
     <div class='messageError'>
