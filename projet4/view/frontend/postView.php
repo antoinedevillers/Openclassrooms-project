@@ -29,7 +29,7 @@
                 <?php
                 }
                  $comments->closeCursor();
-                 
+
                 $pageComment = (!empty($_GET['pageComment']) ? $_GET['pageComment'] : 1);
                 if ($pageComment> 1):
                     ?><a href="?action=post&amp;id=<?= $post['id']?>&amp;pageComment=<?php echo $pageComment - 1; ?>">Page précédente</a> — <?php
@@ -52,7 +52,9 @@
             </div>
             <div class='formAddComments'>
                 <h2> Ajouter un commentaire </h2>
-                <?php if (isset($errorMessage)){ echo $errorMessage; }?>
+                <div class='messageError'>
+                    <?php if (isset($errorMessage)){ echo $errorMessage; }?>
+                </div>
                 <form action="index.php?action=addComment&amp;id=<?= $post['id'] ?>" method="post">
                     <div>
                         <label for="author">Auteur</label><br />

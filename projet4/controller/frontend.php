@@ -11,7 +11,10 @@ class Frontend
 {
 
 public function listPosts()
-{
+{   
+    $page = (!empty($_GET['page']) ? $_GET['page'] : 1);
+    $limite = 3;
+    $debut = ($page - 1) * $limite;
     $postManager = new PostManager();
     $posts = $postManager->getPosts();
     $countPosts=$postManager->countPosts();
@@ -20,7 +23,7 @@ public function listPosts()
 }
 
 public function post()
-{
+{   
     $postManager = new PostManager();
     $commentManager = new CommentManager();
 

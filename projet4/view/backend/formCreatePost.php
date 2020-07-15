@@ -2,9 +2,12 @@
 
 <?php ob_start(); ?>
 <section>
-<?php if (isset($errorMessage)){ echo $errorMessage; }?>
-<h2> Ajouter un nouveau billet </h2>
-        <form action="index.php?action=addPost" method="post">
+    
+    <h2> Ajouter un nouveau billet </h2>
+    <div class='messageError'>
+        <?php if (isset($errorMessage)){ echo $errorMessage; }?>
+    </div>    
+    <form action="index.php?action=addPost" method="post">
             <div class="inputFormPost">
                 <label for="title">Titre</label><br />
                 <input type="text" id="title" name="title" size="80" />

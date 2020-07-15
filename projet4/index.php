@@ -13,7 +13,7 @@ try { // On essaie de faire des choses
             
             $listPosts = $frontend->listPosts();
         }
-        elseif ($_GET['action'] == 'post') {
+        else if ($_GET['action'] == 'post') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 $frontend = new Frontend();
 
@@ -47,9 +47,14 @@ try { // On essaie de faire des choses
             throw new Exception('Aucun identifiant de commentaire');
             }
         } else if ($_GET['action'] == 'connexionAdmin') {
-            $backend = new Backend();
-            $connexionAdmin = $backend->connexionAdmin();
+            if ($_POST['pseudo_Connexion'] == NULL OR $_POST['pass_Connexion'] == NULL){
 
+                throw new Exception('Vous n\'avez pas rempli tous les champs');
+
+            } else {
+                    $backend = new Backend();
+                    $connexionAdmin = $backend->connexionAdmin();
+            }
         } else if ($_GET['action'] == 'deconnexionAdmin') {
             $backend = new Backend();
             $deconnexionAdmin = $backend->deconnexionAdmin();
@@ -67,10 +72,14 @@ try { // On essaie de faire des choses
             $formChangePost = $backend->formChangePost();
 
         } else if ($_GET['action'] == 'changePost'){
-            if (isset($_GET['id']) && $_GET['id'] > 0) {                
-                $backend = new Backend();
-                $changePost = $backend->changePost($_POST['title'],$_POST['content'], $_GET['id']);
+            if (isset($_GET['id']) && $_GET['id'] > 0) {
+                if (!empty($_POST['title']) && !empty($_POST['content'])) {        
+                    $backend = new Backend();
+                    $changePost = $backend->changePost($_POST['title'],$_POST['content'], $_GET['id']);
                 
+                } else {
+                    throw new Exception('Tous les champs ne sont pas remplis !');
+                }
             }
         } else if($_GET['action'] == 'formCreatePost'){       
                 $backend = new Backend();
@@ -132,9 +141,23 @@ catch(Exception $e) { // S'il y a eu une erreur, alors...
     if ($_GET['action'] == 'addComment'){
         require('view/frontend/errorView.php');
     } 
+    else if ($_GET['action'] == 'post') {
+        header('Location: index.php?action=listPosts#derniersbillets');
+    }    
     else if ($_GET['action'] == 'addPost'){
 
-    require('view/backend/formCreatePost.php');
+        require('view/backend/formCreatePost.php');
     }
+    else if ($_GET['action'] == 'changePost'){
+
+        require('view/backend/formChangePost.php');
+    }
+    else if ($_GET['action'] == 'connexionAdmin'){
+
+        require('view/frontend/formConnexionAdmin.php');
+    } else {
+        require('view/frontend/errorView.php');
+    }
+
 
 }

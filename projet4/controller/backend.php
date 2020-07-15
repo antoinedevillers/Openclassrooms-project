@@ -18,10 +18,9 @@ function formChangePost()
 function changePost( $title, $content,$id)
 {
 	$postManager = new PostManager();
-
 	$modifiedPost = $postManager->editPost( $title, $content, $id);
 	if ($modifiedPost === false) {
-        throw new Exception('Impossible de modifier le commentaire !');
+        throw new Exception('Impossible de modifier le billet !');
     }
     else {
         header('Location: index.php?action=formChangePost&id='. $_GET['id']);
@@ -58,52 +57,46 @@ function deletePost ($id)
 }
 function connexionAdmin()
 {   
-    if ($_POST['pseudo_Connexion'] == NULL OR $_POST['pass_Connexion'] == NULL){
+    
+	$loginManager = new loginManager();
 
-        echo 'Vous n\'avez pas rempli tous les champs';
+	$req = $loginManager->getLoginAndPass();
+	$resultat = $req->fetch();
 
+	// Comparaison du pass envoyé via le formulaire avec la base
+	$isPasswordCorrect = password_verify($_POST['pass_Connexion'], $resultat['pass']);
+
+	if (!$resultat)
+	{
+		throw new Exception('Mauvais identifiant ou mot de passe !');
 	} else {
-		$loginManager = new loginManager();
+	    if ($isPasswordCorrect) {
+          session_start();
+          $_SESSION['id'] = $resultat['id'];
+          $_SESSION['login'] = $_POST['pseudo_Connexion'];
 
-		$req = $loginManager->getLoginAndPass();
-		$resultat = $req->fetch();
+          header('Location: index.php');
 
-		// Comparaison du pass envoyé via le formulaire avec la base
-		$isPasswordCorrect = password_verify($_POST['pass_Connexion'], $resultat['pass']);
+	    } else {
 
-		if (!$resultat)
-		{
-			echo 'Mauvais identifiant ou mot de passe !';
-		} else {
-		    if ($isPasswordCorrect) {
-	          session_start();
-	          $_SESSION['id'] = $resultat['id'];
-	          $_SESSION['login'] = $_POST['pseudo_Connexion'];
-
-	          header('Location: index.php');
-
-		    } else {
-
-	          echo 'Mauvais identifiant ou mot de passe !';
-		    }
-		}
+           throw new Exception('Mauvais identifiant ou mot de passe !');
+	    }
 	}
 }
 
 function deconnexionAdmin()
 {
+    session_start();
 
-session_start();
+    // Suppression des variables de session et de la session
+    $_SESSION = array();
+    session_destroy();
 
-// Suppression des variables de session et de la session
-$_SESSION = array();
-session_destroy();
+    // Suppression des cookies de connexion automatique
+    setcookie('pseudo', '');
+    setcookie('pass', '');
 
-// Suppression des cookies de connexion automatique
-setcookie('pseudo', '');
-setcookie('pass', '');
-
-header('Location: index.php?action=listPosts');
+    header('Location: index.php?action=listPosts');
 }
 
 function reportedComments()
