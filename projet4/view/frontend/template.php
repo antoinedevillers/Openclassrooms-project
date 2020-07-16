@@ -64,5 +64,6 @@
         </footer>
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script src="public/js/menuBurger.js"></script>
+        <script src="public/js/deletePost.js"></script>
     </body>
 </html>

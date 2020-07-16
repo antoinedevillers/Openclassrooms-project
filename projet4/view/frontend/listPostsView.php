@@ -23,7 +23,7 @@
                     {
                     ?>
                     <a href="index.php?action=formChangePost&amp;id=<?= $data['id'] ?>" >Modifier </a> /
-                    <a href="index.php?action=deletePost&amp;id=<?= $data['id'] ?>" >Supprimer </a>
+                    <a class='btn_deletePost' href="index.php?action=deletePost&amp;id=<?= $data['id'] ?>" onclick="return confirm('Etes vous sûre de vouloir supprimer ce billet ?');" >Supprimer </a>
                     <?php
                      }    
                     ?>

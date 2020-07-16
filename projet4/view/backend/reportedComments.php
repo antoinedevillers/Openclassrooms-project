@@ -10,8 +10,8 @@
     {
     ?><div class='containerReportedComment'>
         <p><strong><?= htmlspecialchars($data['author']) ?></strong> le <?= $data['comment_date_fr'] ?>
-            <a href='index.php?action=allowComment&amp;id=<?= $data['id'] ?>'>Autoriser </a> /
-            <a href='index.php?action=deleteComment&amp;id=<?= $data['id'] ?>'>Supprimer</a>
+            <a href='index.php?action=allowComment&amp;id=<?= $data['id'] ?>' onclick="return confirm('Etes vous sûre de vouloir autoriser ce commentaire ?');">Autoriser </a> /
+            <a href='index.php?action=deleteComment&amp;id=<?= $data['id'] ?>' onclick="return confirm('Etes vous sûre de vouloir supprimer ce commentaire ?');">Supprimer</a>
          </p>
         <p><?= nl2br(htmlspecialchars($data['comment'])) ?></p>
        </div>
