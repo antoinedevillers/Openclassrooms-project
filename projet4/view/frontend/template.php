@@ -27,6 +27,11 @@
                     <?php
                     } 
                     ?>
+            <div class='btn_navigation'>
+                <div class='barre'></div>
+                <div class='barre'></div>
+                <div class='barre'></div>
+            </div>
     		<nav>
     			<ul>   				
                     <?php if(!isset($_SESSION['id']) AND !isset($_SESSION['login']))
@@ -57,5 +62,7 @@
         <footer>
         	Blog de Jean Fourterouche - Projet Openclassrooms
         </footer>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="public/js/menuBurger.js"></script>
     </body>
 </html>

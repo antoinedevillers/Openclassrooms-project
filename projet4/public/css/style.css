@@ -14,8 +14,13 @@ h1 {
     position: absolute;
     top: 50%;
     left: 50%;
+    transition: transform .6s ease-in-out;
     transform: translate(-50%, -100%);
     width: 80%;
+}
+h1.isOpen{
+
+	transform:translateX(-200%);
 }
 h2 {	
 	padding-top: 5%;
@@ -207,6 +212,58 @@ footer{
 /*Responsive max-width 1024px*/
 @media screen and (max-width: 1024px) {
 
+/*Menu burger*/
+.btn_navigation{
+	position:fixed;
+	right : 30px;
+	top: 30px;
+	z-index:21;
+	cursor: pointer;
+}
+.btn_navigation .barre{
+	width:30px;
+	height: 3px;
+	background:white;
+	margin-top: 3px;
+}
+
+.btn_navigation.isOpen{
+	
+	cursor: pointer;
+}
+.btn_navigation.barre.isOpen{
+	width:30px;
+	height: 3px;
+	background:white;
+	margin-top: 3px;
+}
+nav{
+	right:0;
+	width: 30%;
+	height: 100%;
+	transition: transform .6s ease-in-out;
+	transform:translate(100%);
+}
+nav.isOpen{
+	transform:translate(0);
+	background-color: rgba(0,0,0,0.7);
+	z-index: 20;
+}
+nav ul{
+	display: block;
+	position: absolute;
+	top: 50%;
+	transform: translate(0,-50%);
+	text-align: left;
+}
+nav ul {
+	padding: 0;
+}
+nav ul a{
+	text-transform: uppercase;
+	font-size: 1.2em;
+
+}
 /* Page formConnexionAdmin */
 #sectionConnexionAdmin {
     height: 320px;
@@ -219,6 +276,14 @@ transform: translate(-50%,25%);
 /*Responsive max-width 768px*/
 @media screen and (max-width: 768px) {
 
+/*MenuBurger*/
+nav {
+	width: 45%;
+}
+nav.isOpen{
+	width: 45%;
+	background-color: rgba(0,0,0,0.8);
+}
 /*Page ListPostView*/
 .imageTitle{
 	height: 600px;
@@ -260,6 +325,13 @@ transform: translate(-50%,25%);
 .messageBienvenue{
 	display: none;
 }
+/*MenuBurger*/
+nav {
+	width: 50%;
+}
+nav.isOpen{
+	width: 50%;
+}
 /*Page ListPostView*/
 h1{
 	font-size: 2.5em;
@@ -290,6 +362,15 @@ h1{
 /*Responsive min-width 325px*/
 @media screen and (max-width: 325px) {
 
+/*MenuBurger*/
+/*MenuBurger*/
+nav {
+	width: 100%;
+}
+nav.isOpen{
+	width: 100%;
+	background-color: rgba(0,0,0,0.8);
+}
 /* Page formConnexionAdmin */
 #formulaireAdministrateur form{
 	
