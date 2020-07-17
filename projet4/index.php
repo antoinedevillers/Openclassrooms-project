@@ -6,7 +6,7 @@ require ('controller/Backend.php');
 use \Openclassrooms\sitesPHP\Openclassroomsproject\projet4\controller\Frontend;
 use \Openclassrooms\sitesPHP\Openclassroomsproject\projet4\controller\Backend;
 
-try { // On essaie de faire des choses
+try { 
     if (isset($_GET['action'])) {
         if ($_GET['action'] == 'listPosts') {
             $frontend = new Frontend();
@@ -20,11 +20,11 @@ try { // On essaie de faire des choses
                 $post = $frontend->post();
             }
             else {
-                // Erreur ! On arrête tout, on envoie une exception, donc au saute directement au catch
                 throw new Exception('Aucun identifiant de billet envoyé');
             }
         }
-        elseif ($_GET['action'] == 'addComment') {
+// Action ajout et affichage de commentaires
+        else if ($_GET['action'] == 'addComment') {
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 if (!empty($_POST['author']) && !empty($_POST['comment'])) {
                     $frontend = new Frontend();
@@ -32,7 +32,6 @@ try { // On essaie de faire des choses
                     $addComment = $frontend->addComment($_GET['id'], $_POST['author'], $_POST['comment']);
                 }
                 else {
-                    // Autre exception
                     throw new Exception('Tous les champs ne sont pas remplis !');
                 }
             }            
@@ -43,9 +42,11 @@ try { // On essaie de faire des choses
                 $comment = $frontend->comment($_GET['id']);
             } 
             else {
-            // Autre exception
-            throw new Exception('Aucun identifiant de commentaire');
+                throw new Exception('Aucun identifiant de commentaire');
             }
+
+//Action connexion/deconnexion à l'administration
+
         } else if ($_GET['action'] == 'connexionAdmin') {
             if ($_POST['pseudo_Connexion'] == NULL OR $_POST['pass_Connexion'] == NULL){
 
@@ -63,6 +64,8 @@ try { // On essaie de faire des choses
             $frontend = new Frontend();
             $formConnexionAdmin = $frontend->formConnexionAdmin();
 
+//Action sur les billets
+
         } else if ($_GET['action'] == 'formPost'){
             $backend = new Backend();
             $formPost = $backend->formPost();
@@ -75,11 +78,12 @@ try { // On essaie de faire des choses
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 if (!empty($_POST['title']) && !empty($_POST['content'])) {        
                     $backend = new Backend();
-                    $changePost = $backend->changePost($_POST['title'],$_POST['content'], $_GET['id']);
-                
+                    $changePost = $backend->changePost($_POST['title'],$_POST['content'], $_GET['id']); 
                 } else {
                     throw new Exception('Tous les champs ne sont pas remplis !');
                 }
+            } else {
+                throw new Exception('Aucun identifiant de billet envoyé');
             }
         } else if($_GET['action'] == 'formCreatePost'){       
                 $backend = new Backend();
@@ -92,15 +96,17 @@ try { // On essaie de faire des choses
                     $addPost = $backend->addPost($_POST['title'], $_POST['content']);
                 }
                 else {
-                    // Autre exception
                     throw new Exception('Tous les champs ne sont pas remplis !');
                 }
         } else if ($_GET['action'] == 'deletePost'){
             if (isset($_GET['id']) && $_GET['id'] > 0) {                
                 $backend = new Backend();
-                $deletePost = $backend->deletePost($_GET['id']);
-                
+                $deletePost = $backend->deletePost($_GET['id']);               
             }
+            else {
+                throw new Exception('Aucun identifiant de billet');
+            } 
+//Action liée au signalement de commentaire
         } else if ($_GET['action'] == 'formReport'){
             $frontend = new Frontend();
             $formReport = $frontend->formReport();
@@ -111,8 +117,7 @@ try { // On essaie de faire des choses
                 $reportComment = $frontend->reportComment($_GET['id']);
             } 
             else {
-            // Autre exception
-            throw new Exception('Aucun identifiant de commentaire');
+                throw new Exception('Aucun identifiant de commentaire');
             }   
         } else if ($_GET['action'] == 'reportedComments'){
             $backend = new Backend();
@@ -123,11 +128,16 @@ try { // On essaie de faire des choses
                 $backend = new Backend();
                 $deleteComment = $backend->deleteComment($_GET['id']);
                } 
-            
+            else {
+                throw new Exception('Aucun identifiant de commentaire');
+            } 
         } else if ($_GET['action'] == 'allowComment'){
             if (isset($_GET['id']) && $_GET['id'] > 0) {                
                 $backend = new Backend();
                 $allowComment = $backend->allowComment($_GET['id']);
+            } 
+            else {
+                throw new Exception('Aucun identifiant de commentaire');
             } 
         } 
     } else {

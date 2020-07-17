@@ -1,4 +1,4 @@
-<?php $title = 'Mon blog'; ?>
+<?php $title = 'Billet simple pour l\'Alaska'; ?>
 
 <?php ob_start(); ?>
 <section id='formReport'>
@@ -11,10 +11,7 @@
 		</div>
 		<form action="index.php?action=reportComment&amp;id=<?= $comment['id'] ?>" method="post">
 			<input id="postId" name="postId" type="hidden" value="<?= $comment['post_id'] ?>">
-		   
-		    <div>
-		        <input type="submit" value="Signaler ce commentaire" />
-		    </div>
+		    <input type="submit" value="Signaler ce commentaire" />
 		</form>
 	</div>
 </section>

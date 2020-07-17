@@ -22,21 +22,21 @@ class CommentManager extends Manager
 
     }
     public function countComments()
-{   
-    $pageComment = (!empty($_GET['pageComment']) ? $_GET['pageComment'] : 1);
-    $limite = 3;
-    $debut = ($pageComment - 1) * $limite;
-    $db = $this->dbConnect();
-    /* On commence par récupérer le nombre d'éléments total. Comme c'est une requête,
-     * il ne faut pas oublier qu'on ne récupère pas directement le nombre.
-     * Ici, comme la requête ne contient aucune donnée client pour fonctionner,
-     * on peut l'exécuter ainsi directement */
-    $req = $db->query('SELECT COUNT(id) AS number_comments FROM comments'); 
-    $nombredElementsTotal = $req->fetchColumn(); 
-    /* On calcule le nombre de pages */
-    $nombreDePages = ceil($nombredElementsTotal / $limite);
-    return $nombreDePages;
-}
+    {   
+        $pageComment = (!empty($_GET['pageComment']) ? $_GET['pageComment'] : 1);
+        $limite = 3;
+        $debut = ($pageComment - 1) * $limite;
+        $db = $this->dbConnect();
+        /* On commence par récupérer le nombre d'éléments total. Comme c'est une requête,
+         * il ne faut pas oublier qu'on ne récupère pas directement le nombre.
+         * Ici, comme la requête ne contient aucune donnée client pour fonctionner,
+         * on peut l'exécuter ainsi directement */
+        $req = $db->query('SELECT COUNT(id) AS number_comments FROM comments'); 
+        $nombredElementsTotal = $req->fetchColumn(); 
+        /* On calcule le nombre de pages */
+        $nombreDePages = ceil($nombredElementsTotal / $limite);
+        return $nombreDePages;
+    }
 
     public function addPostComment($postId, $author, $comment)
     {
@@ -52,8 +52,6 @@ class CommentManager extends Manager
         $comments = $db->prepare('SELECT id, post_id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE id = ?');
         $comments->execute(array($id));
         $comment = $comments->fetch();
-
-
         return $comment;
     }
     public function editComment($id, $comment)
@@ -64,23 +62,16 @@ class CommentManager extends Manager
 
         return $modifiedLines; 
     }
-    public function insertReport($id){
+    public function insertReport($id)
+    {
         $db = $this->dbConnect();
         $comments = $db->prepare('UPDATE comments SET comment_report = 1 WHERE id = ?');
         $reportComment = $comments->execute(array($id));
 
         return $reportComment;
     }
-    public function countCommentReported($commentReported){
-        $db = $this->dbConnect();
-        // On récupère le nombre de signalements par commentaire
-        $req = $db->prepare('SELECT count(*) FROM membres WHERE comment_report = :comment_report')or die(print_r($db->errorInfo()));
-        $req->execute(array(
-            'comment_report'=>$commentReported
-        ));
-    return $req;
-    }
-    public function getCommentReported(){
+    public function getCommentReported()
+    {
         $db = $this->dbConnect();
     // On récupère les commentaires signalés 
         $reportedComments = $db->query('SELECT id, post_id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE comment_report = 1');
@@ -98,11 +89,11 @@ class CommentManager extends Manager
     public function allowCommentReported($id)
     {
         $db = $this->dbConnect();
-    // On récupère les commentaires signalés 
+    // On modifie la valeur du commentaire dans le champ comment_report pour autoriser sa publication
         $comments = $db->prepare('UPDATE comments SET comment_report = 0 WHERE id = ?');
         $allowComment = $comments->execute(array($id));
 
        
-    return $allowComment;
+        return $allowComment;
     }
 }

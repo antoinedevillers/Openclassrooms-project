@@ -2,14 +2,14 @@
 body {
 	text-align: center;
 	background-color: #d3d3d3;
-	margin:0; 
+	margin:0;
+	font-family: "Times New Roman", "Arial Black", Arial, Verdana, sans-serif; 
 
 }
 h1 {
 	text-align: center;
     top: 50%;
     font-size: 4em;
-    transform: translate(0,-50%);
     color: white;
     position: absolute;
     top: 50%;
@@ -132,9 +132,7 @@ section {
     color: black;
     background-color: rgba(255,255,255);
 }
-.inputFormPost{
-	margin:20px;
-}
+
 .containerCommentsAndFormAddComment{
 	display: flex;
 }
@@ -202,7 +200,14 @@ section {
 #formReport{
 	height:420px;
 }
-
+/*Page formChangePost*/
+.containerChangePost{
+	background-color: rgba(255,255,255,0.5);
+	margin:10px;
+}
+.inputFormPost{
+	padding:20px;
+}
 footer{
 	padding: 7%;
 	border-top: 1px solid black;
@@ -327,10 +332,10 @@ nav.isOpen{
 }
 /*MenuBurger*/
 nav {
-	width: 50%;
+	width: 60%;
 }
 nav.isOpen{
-	width: 50%;
+	width: 60%;
 }
 /*Page ListPostView*/
 h1{
@@ -362,7 +367,6 @@ h1{
 /*Responsive min-width 325px*/
 @media screen and (max-width: 325px) {
 
-/*MenuBurger*/
 /*MenuBurger*/
 nav {
 	width: 100%;

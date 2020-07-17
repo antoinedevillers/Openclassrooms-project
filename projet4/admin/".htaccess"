@@ -1,4 +1,0 @@
-AuthName "Page d'administration protégée"
-AuthType Basic
-AuthUserFile "/Users/devillers/Documents/Openclassrooms/sitesPHP/projet4/admin/.htpasswd"
-Require valid-user

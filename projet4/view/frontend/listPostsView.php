@@ -1,15 +1,14 @@
-<?php $title = 'Mon blog'; ?>
+<?php $title = 'Billet simple pour l\'Alaska'; ?>
 
 <?php ob_start(); ?>
 
-            <div class='imageTitle'>
-            <h1>Billet simple pour l'Alaska</h1>
-            <p id ="anchorLastPosts"><a href='#derniersbillets'>Voir les derniers chapitres<a></p>    
+<div class='imageTitle'>
+    <h1>Billet simple pour l'Alaska</h1>
+    <p id ="anchorLastPosts"><a href='#derniersbillets'>Voir les derniers chapitres<a></p>    
 </div>
 <section id='billet'>
     
     <h2 id='derniersbillets'>Derniers billets du blog :</h2>
-
 
     <?php
     while ($data = $posts->fetch())
@@ -17,36 +16,34 @@
     ?>
     <div class="news">
         <div class="container_post_features">
-          <h3><a href="index.php?action=post&amp;id=<?= $data['id'] ?>"><?= htmlspecialchars($data['title']) ?></a></h3> 
+            <h3><a href="index.php?action=post&amp;id=<?= $data['id'] ?>"><?= htmlspecialchars($data['title']) ?></a></h3> 
+
             <i>( mis à jour le <?= $data['creation_date_fr'] ?> )</i>
-                <?php if(isset($_SESSION['id']) AND isset($_SESSION['login']))
-                    {
-                    ?>
+
+                <?php if(isset($_SESSION['id']) AND isset($_SESSION['login'])){
+                ?>
                     <a href="index.php?action=formChangePost&amp;id=<?= $data['id'] ?>" >Modifier </a> /
                     <a class='btn_deletePost' href="index.php?action=deletePost&amp;id=<?= $data['id'] ?>" onclick="return confirm('Etes vous sûre de vouloir supprimer ce billet ?');" >Supprimer </a>
-                    <?php
-                     }    
-                    ?>
-            </i>
+                <?php
+                 }    
+                ?>
            <p><?php echo substr($data['content'], 0, 500) . '[...]';?><p>
         </div>
-        
-        
         <p>
             <em><a href="index.php?action=post&amp;id=<?= $data['id'] ?>">Lire le chapitre</a></em>
         </p>
     </div>
 
     <?php
-}
-$posts->closeCursor();
+    }
+    $posts->closeCursor();
 
-/* Si on est sur la première page, on n'a pas besoin d'afficher de lien
- * vers la précédente. On va donc ne l'afficher que si on est sur une autre
- * page que la première */
-?>
+    /* Si on est sur la première page, on n'a pas besoin d'afficher de lien
+     * vers la précédente. On va donc ne l'afficher que si on est sur une autre
+     * page que la première */
+    ?>
     <div class='pagination'>
-        <?php
+    <?php
         $page = (!empty($_GET['page']) ? $_GET['page'] : 1);
         if ($page> 1):
             ?><a href="?page=<?php echo $page - 1; ?>#derniersbillets">Page précédente</a> — <?php
