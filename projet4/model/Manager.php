@@ -1,5 +1,5 @@
 <?php
-namespace Openclassrooms\sitesPHP\Openclassroomsproject\projet4\model;
+namespace Projet4\model;
 
 class Manager
 {

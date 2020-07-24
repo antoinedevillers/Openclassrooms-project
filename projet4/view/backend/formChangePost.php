@@ -5,21 +5,23 @@
 <section>
     <div class="news">
         <h3>
-            <?= $post['title'] ?>
-            <em>le <?= $post['creation_date_fr'] ?></em>
+            <?= $post->title() ?>
+            <em>le <?= $post->creation_date_fr() ?></em>
         </h3>
         
         <p>
-            <?= $post['content'] ?>
+            <?= $post->content() ?>
         </p>
-    </div>
-    <div class='messageError'>
-        <?php if (isset($errorMessage)){ echo $errorMessage; }?>
     </div>
     <div class='containerChangePost'>
         <h2> Modifier le billet </h2>
+        <div class='messageError' id='messageError'>
+        <?php if (isset($_SESSION['error'])){ echo 'Tous les champs ne sont pas remplis';}
+                unset($_SESSION['error']);
+                ?>
+        </div>  
         
-        <form action="index.php?action=changePost&amp;id=<?= $post['id'] ?>" method="post">
+        <form action="index.php?action=changePost&amp;id=<?= $post->id() ?>#messageError" method="post">
             <div class="inputFormPost">
                 <label for="title">Titre</label><br />
                 <input type="text" id="title" name="title" size="80" />

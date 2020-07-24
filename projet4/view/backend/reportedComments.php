@@ -6,19 +6,18 @@
    <h2>Commentaires signalés</h2>
     
     <?php
-    while ($data = $reportedComments->fetch())
+    foreach ($reportedComments as $reportedComment)
     {
     ?>
     <div class='containerReportedComment'>
-        <p><strong><?= htmlspecialchars($data['author']) ?></strong> le <?= $data['comment_date_fr'] ?>
-            <a href='index.php?action=allowComment&amp;id=<?= $data['id'] ?>' onclick="return confirm('Etes vous sûre de vouloir autoriser ce commentaire ?');">Autoriser </a> /
-            <a href='index.php?action=deleteComment&amp;id=<?= $data['id'] ?>' onclick="return confirm('Etes vous sûre de vouloir supprimer ce commentaire ?');">Supprimer</a>
+        <p><strong><?= htmlspecialchars($reportedComment->author()) ?></strong> le <?= $reportedComment->comment_date_fr() ?>
+            <a href='index.php?action=allowComment&amp;id=<?= $reportedComment->id() ?>' onclick="return confirm('Etes vous sûre de vouloir autoriser ce commentaire ?');">Autoriser </a> /
+            <a href='index.php?action=deleteComment&amp;id=<?= $reportedComment->id() ?>' onclick="return confirm('Etes vous sûre de vouloir supprimer ce commentaire ?');">Supprimer</a>
         </p>
-        <p><?= nl2br(htmlspecialchars($data['comment'])) ?></p>
+        <p class ='comment'><?= nl2br(htmlspecialchars($reportedComment->comment())) ?></p>
     </div>
     <?php
     }
-    $reportedComments->closeCursor();
     ?>
 
 </section>

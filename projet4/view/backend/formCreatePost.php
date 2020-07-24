@@ -5,8 +5,10 @@
     
     <h2> Ajouter un nouveau billet </h2>
     <div class='messageError'>
-        <?php if (isset($errorMessage)){ echo $errorMessage; }?>
-    </div>    
+        <?php if (isset($_SESSION['error'])){ echo 'Tous les champs ne sont pas remplis';}
+                unset($_SESSION['error']);
+                ?>
+    </div>   
     <form action="index.php?action=addPost" method="post">
         <div class="inputFormPost">
             <label for="title">Titre</label><br />

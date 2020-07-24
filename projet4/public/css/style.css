@@ -43,11 +43,13 @@ h3 a {
     background-position: center;
 }
 .messageError{
-	color: white;
-	font-weight: bold;
+	color: red;
 }
 .pagination a{
 	color:white;
+}
+.comment{
+	word-break: break-all;
 }
 /*Menu*/
 .messageBienvenue{

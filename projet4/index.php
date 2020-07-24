@@ -3,8 +3,8 @@ session_start();
 require ('controller/Frontend.php');
 require ('controller/Backend.php');
 
-use \Openclassrooms\sitesPHP\Openclassroomsproject\projet4\controller\Frontend;
-use \Openclassrooms\sitesPHP\Openclassroomsproject\projet4\controller\Backend;
+use \Projet4\controller\Frontend;
+use \Projet4\controller\Backend;
 
 try { 
     if (isset($_GET['action'])) {
@@ -32,7 +32,8 @@ try {
                     $addComment = $frontend->addComment($_GET['id'], $_POST['author'], $_POST['comment']);
                 }
                 else {
-                    throw new Exception('Tous les champs ne sont pas remplis !');
+                    $_SESSION['error'] = ''; 
+                    header('Location: index.php?action=post&id=' . $_GET['id']);
                 }
             }            
         } else if($_GET['action'] == 'comment') {
@@ -50,7 +51,8 @@ try {
         } else if ($_GET['action'] == 'connexionAdmin') {
             if ($_POST['pseudo_Connexion'] == NULL OR $_POST['pass_Connexion'] == NULL){
 
-                throw new Exception('Vous n\'avez pas rempli tous les champs');
+                $_SESSION['error'] = ''; 
+                    header('Location: index.php?action=formConnexionAdmin');
 
             } else {
                     $backend = new Backend();
@@ -80,7 +82,8 @@ try {
                     $backend = new Backend();
                     $changePost = $backend->changePost($_POST['title'],$_POST['content'], $_GET['id']); 
                 } else {
-                    throw new Exception('Tous les champs ne sont pas remplis !');
+                    $_SESSION['error'] = ''; 
+                    header('Location: index.php?action=formChangePost&id='. $_GET['id']);
                 }
             } else {
                 throw new Exception('Aucun identifiant de billet envoyé');
@@ -96,7 +99,8 @@ try {
                     $addPost = $backend->addPost($_POST['title'], $_POST['content']);
                 }
                 else {
-                    throw new Exception('Tous les champs ne sont pas remplis !');
+                    $_SESSION['error'] = ''; 
+                    header('Location: index.php?action=formCreatePost');
                 }
         } else if ($_GET['action'] == 'deletePost'){
             if (isset($_GET['id']) && $_GET['id'] > 0) {                
@@ -148,26 +152,6 @@ try {
 catch(Exception $e) { // S'il y a eu une erreur, alors...
     $errorMessage = $e->getMessage();
 
-    if ($_GET['action'] == 'addComment'){
-        require('view/frontend/errorView.php');
-    } 
-    else if ($_GET['action'] == 'post') {
-        header('Location: index.php?action=listPosts#derniersbillets');
-    }    
-    else if ($_GET['action'] == 'addPost'){
-
-        require('view/backend/formCreatePost.php');
-    }
-    else if ($_GET['action'] == 'changePost'){
-
-        require('view/backend/formChangePost.php');
-    }
-    else if ($_GET['action'] == 'connexionAdmin'){
-
-        require('view/frontend/formConnexionAdmin.php');
-    } else {
-        require('view/frontend/errorView.php');
-    }
-
+    require('view/frontend/errorView.php');
 
 }

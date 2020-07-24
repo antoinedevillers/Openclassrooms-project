@@ -9,13 +9,13 @@
 			<p><strong><?= htmlspecialchars($comment['author']) ?></strong> le <?= $comment['comment_date_fr'] ?> </p>
 			<p><?= nl2br(htmlspecialchars($comment['comment'])) ?></p>
 		</div>
-		<form action="index.php?action=reportComment&amp;id=<?= $comment['id'] ?>" method="post">
+		<form action="index.php?action=reportComment&amp;id=<?= $comment->id() ?>" method="post">
 			<input id="postId" name="postId" type="hidden" value="<?= $comment['post_id'] ?>">
 		    <input type="submit" value="Signaler ce commentaire" />
 		</form>
 	</div>
 </section>
-<p class='returnListPosts'><a href="index.php?action=post&amp;id=<?= $comment['id'] ?>" >Retour au billet</a></p>
+<p class='returnListPosts'><a href="index.php?action=post&amp;id=<?= $comment->id() ?>" >Retour au billet</a></p>
 
 <?php $content = ob_get_clean(); ?>
 

@@ -1,98 +1,99 @@
 <?php
 
-namespace Openclassrooms\sitesPHP\Openclassroomsproject\projet4\model;
+namespace Projet4\model;
 
 require_once("model/Manager.php");
+require_once("model/Comment.php");
 
 class CommentManager extends Manager
 {
     public function getComments($postId)
-    {   
+    {   $comments=[];
         $pageComment = (!empty($_GET['pageComment']) ? $_GET['pageComment'] : 1);
         $limite = 3;
         $debut = ($pageComment - 1) * $limite;
         $db = $this->dbConnect();
-        $comments = $db->prepare('SELECT id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE post_id = :post_id ORDER BY comment_date DESC LIMIT :limite OFFSET :debut');
-        $comments->bindParam(':post_id', $postId, \PDO::PARAM_INT);
-        $comments->bindParam(':limite', $limite, \PDO::PARAM_INT);
-        $comments->bindParam(':debut', $debut, \PDO::PARAM_INT);
-        $comments->execute();
-
+        $req = $db->prepare('SELECT * FROM comments WHERE post_id = :post_id ORDER BY comment_date DESC LIMIT :limite OFFSET :debut');
+        $req->bindParam(':post_id', $postId, \PDO::PARAM_INT);
+        $req->bindParam(':limite', $limite, \PDO::PARAM_INT);
+        $req->bindParam(':debut', $debut, \PDO::PARAM_INT);
+        $req->execute();
+        while ($data = $req->fetch())
+        {
+          $comments[] = new Comment($data);
+        }
         return $comments;
 
     }
-    public function countComments()
+    public function countComments($postId)
     {   
-        $pageComment = (!empty($_GET['pageComment']) ? $_GET['pageComment'] : 1);
+     
         $limite = 3;
-        $debut = ($pageComment - 1) * $limite;
+        
         $db = $this->dbConnect();
         /* On commence par récupérer le nombre d'éléments total. Comme c'est une requête,
          * il ne faut pas oublier qu'on ne récupère pas directement le nombre.
          * Ici, comme la requête ne contient aucune donnée client pour fonctionner,
          * on peut l'exécuter ainsi directement */
-        $req = $db->query('SELECT COUNT(id) AS number_comments FROM comments'); 
+        $req = $db->prepare('SELECT COUNT(id) AS number_comments FROM comments WHERE post_id= :post_id'); 
+        $req->execute(['post_id' => $postId]);
         $nombredElementsTotal = $req->fetchColumn(); 
         /* On calcule le nombre de pages */
         $nombreDePages = ceil($nombredElementsTotal / $limite);
         return $nombreDePages;
     }
 
-    public function addPostComment($postId, $author, $comment)
+    public function addPostComment(Comment $comment)
     {
         $db = $this->dbConnect();
-        $comments = $db->prepare('INSERT INTO comments(post_id, author, comment, comment_date, comment_report) VALUES(?, ?, ?, NOW(), 0)');
-        $affectedLines = $comments->execute(array($postId, $author, $comment));
-
-        return $affectedLines;
+        $req = $db->prepare('INSERT INTO comments(post_id, author, comment, comment_date, comment_report) VALUES(:post_id, :author, :comment, NOW(), 0)');
+        $req->bindValue(':post_id',$comment->post_id());
+        $req->bindValue(':author',$comment->author());
+        $req->bindValue(':comment',$comment->comment());
+        $req->execute();
     }
     public function getComment($id)
     {
         $db = $this->dbConnect();
-        $comments = $db->prepare('SELECT id, post_id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE id = ?');
-        $comments->execute(array($id));
-        $comment = $comments->fetch();
-        return $comment;
+        $req = $db->prepare('SELECT id, post_id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE id = ?');
+        $req->execute(array($id));
+        $data = $req->fetch();
+        return new Comment($data);
     }
-    public function editComment($id, $comment)
+
+    public function insertReport(Comment $comment)
     {
         $db = $this->dbConnect();
-        $comments = $db->prepare('UPDATE comments SET comment = ?, comment_date = NOW() WHERE id = ?');
-        $modifiedLines = $comments->execute(array($comment, $id));
-
-        return $modifiedLines; 
-    }
-    public function insertReport($id)
-    {
-        $db = $this->dbConnect();
-        $comments = $db->prepare('UPDATE comments SET comment_report = 1 WHERE id = ?');
-        $reportComment = $comments->execute(array($id));
-
-        return $reportComment;
+        $req = $db->prepare('UPDATE comments SET comment_report = 1 WHERE id = :id');
+        $req->bindValue(':id', $comment->id());
+        $req->execute();
+        
     }
     public function getCommentReported()
     {
         $db = $this->dbConnect();
     // On récupère les commentaires signalés 
-        $reportedComments = $db->query('SELECT id, post_id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE comment_report = 1');
+        $req = $db->query('SELECT * FROM comments WHERE comment_report = 1');
        
-    return $reportedComments;
+        while ($data = $req->fetch())
+        {
+            $commentReported[] = new Comment($data);
+            
+        }
+        return $commentReported;
     }
-    public function eraseComment($id)
+    public function eraseComment(Comment $comment)
     {
         $db = $this->dbConnect();
-        $comments = $db->prepare('DELETE FROM comments WHERE id = ?');
-        $erasedPost = $comments->execute(array($id));
-
-        return $erasedPost;
+        $req = $db->exec('DELETE FROM comments WHERE id = '.$comment->id());
     }
-    public function allowCommentReported($id)
+    public function allowCommentReported(Comment $comment)
     {
         $db = $this->dbConnect();
     // On modifie la valeur du commentaire dans le champ comment_report pour autoriser sa publication
-        $comments = $db->prepare('UPDATE comments SET comment_report = 0 WHERE id = ?');
-        $allowComment = $comments->execute(array($id));
-
+        $req = $db->prepare('UPDATE comments SET comment_report = 0 WHERE id = :id');
+        $req->bindValue(':id', $comment->id());
+        $req->execute();
        
         return $allowComment;
     }

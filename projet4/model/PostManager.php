@@ -1,28 +1,33 @@
 <?php
-namespace Openclassrooms\sitesPHP\Openclassroomsproject\projet4\model;
+namespace Projet4\model;
 
 require_once("model/Manager.php");
+require_once("model/Post.php");
 
 class PostManager extends Manager
 {   
-    public function getPosts()
+    public function getPosts() // récupère la liste des billets
     {   
+        $posts=[];
+
         $page = (!empty($_GET['page']) ? $_GET['page'] : 1);
         $limite = 3;
         $debut = ($page - 1) * $limite;
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr FROM posts ORDER BY creation_date DESC LIMIT :limite OFFSET :debut');
+        $req = $db->prepare('SELECT * FROM posts ORDER BY creation_date DESC LIMIT :limite OFFSET :debut');
         $req->bindParam(':limite', $limite, \PDO::PARAM_INT);
         $req->bindParam(':debut', $debut, \PDO::PARAM_INT);
         
         $req->execute();
-        return $req;
+        while ($data = $req->fetch())
+        {
+          $posts[] = new Post($data);
+        }
+        return $posts;
     }
-    public function countPosts()
+    public function countPosts() // compte le nombre de billets
     {   
-        $page = (!empty($_GET['page']) ? $_GET['page'] : 1);
         $limite = 3;
-        $debut = ($page - 1) * $limite;
         $db = $this->dbConnect();
         /* On commence par récupérer le nombre d'éléments total. Comme c'est une requête,
          * il ne faut pas oublier qu'on ne récupère pas directement le nombre.
@@ -35,41 +40,37 @@ class PostManager extends Manager
         return $nombreDePages;
     }
 
-    public function getPost($postId)
+    public function getPost($postId) //récupère un billet sélectionné
     {
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr FROM posts WHERE id = ?');
         $req->execute(array($postId));
         $post = $req->fetch();
 
-        return $post;
+        return new Post($post);
     }
-    public function insertPost($title, $content)
+    public function insertPost(Post $post) // insère un nouveau billet
     {
             $db = $this->dbConnect();
-            $posts = $db->prepare('INSERT INTO posts(title, content, creation_date) VALUES(?, ?, NOW())');
-            $affectedPost = $posts->execute(array($title, $content));
-
-            return $affectedPost;
+            $req = $db->prepare('INSERT INTO posts(title, content, creation_date) VALUES(:title, :content, NOW())');
+            $req->bindValue(':title', $post->title());
+            $req->bindValue(':content',$post->content());
+            $req->execute();
     }
 
-    public function editPost( $title, $content, $id)
+    public function editPost(Post $post)// récupère le billet à modifier
     {
             $db = $this->dbConnect();
-            $comments = $db->prepare('UPDATE posts SET title = ?, content = ?, creation_date = NOW() WHERE id = ?');
-            $modifiedPost = $comments->execute(array($title, $content, $id));
-
-            return $modifiedPost; 
+            $req = $db->prepare('UPDATE posts SET title = :title, content = :content, creation_date = NOW() WHERE id = :id');
+            $req->bindValue(':title', $post->title());
+            $req->bindValue(':content',$post->content());
+            $req->bindValue(':id', $post->id());
+            $req->execute(); 
     }
 
-    public function erasePost($id)
+    public function erasePost(Post $post) // récupère le billet à supprimer
     {
             $db = $this->dbConnect();
-            $comments = $db->prepare('DELETE FROM posts WHERE id = ?');
-            $erasedPost = $comments->execute(array($id));
-
-            return $erasedPost;
+            $comments = $db->prepare('DELETE FROM posts WHERE id = '.$post->id());
     }
-
-
 }

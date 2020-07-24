@@ -11,32 +11,31 @@
     <h2 id='derniersbillets'>Derniers billets du blog :</h2>
 
     <?php
-    while ($data = $posts->fetch())
-    {
+    foreach ($posts as $post) {
+
     ?>
     <div class="news">
         <div class="container_post_features">
-            <h3><a href="index.php?action=post&amp;id=<?= $data['id'] ?>"><?= htmlspecialchars($data['title']) ?></a></h3> 
+            <h3><a href="index.php?action=post&amp;id=<?= $post->id() ?>"><?= htmlspecialchars($post->title()) ?></a></h3> 
 
-            <i>( mis à jour le <?= $data['creation_date_fr'] ?> )</i>
+            <i>( mis à jour le <?= $post->creation_date_fr() ?> )</i>
 
                 <?php if(isset($_SESSION['id']) AND isset($_SESSION['login'])){
                 ?>
-                    <a href="index.php?action=formChangePost&amp;id=<?= $data['id'] ?>" >Modifier </a> /
-                    <a class='btn_deletePost' href="index.php?action=deletePost&amp;id=<?= $data['id'] ?>" onclick="return confirm('Etes vous sûre de vouloir supprimer ce billet ?');" >Supprimer </a>
+                    <a href="index.php?action=formChangePost&amp;id=<?= $post->id() ?>" >Modifier </a> /
+                    <a class='btn_deletePost' href="index.php?action=deletePost&amp;id=<?= $post->id() ?>" onclick="return confirm('Etes vous sûre de vouloir supprimer ce billet ?');" >Supprimer </a>
                 <?php
                  }    
                 ?>
-           <p><?php echo substr($data['content'], 0, 500) . '[...]';?><p>
+           <p><?php echo substr($post->content(), 0, 500) . '[...]';?><p>
         </div>
         <p>
-            <em><a href="index.php?action=post&amp;id=<?= $data['id'] ?>">Lire le chapitre</a></em>
+            <em><a href="index.php?action=post&amp;id=<?= $post->id() ?>">Lire le chapitre</a></em>
         </p>
     </div>
 
     <?php
     }
-    $posts->closeCursor();
 
     /* Si on est sur la première page, on n'a pas besoin d'afficher de lien
      * vers la précédente. On va donc ne l'afficher que si on est sur une autre

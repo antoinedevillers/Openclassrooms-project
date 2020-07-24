@@ -1,8 +1,8 @@
 <?php
-namespace Openclassrooms\sitesPHP\Openclassroomsproject\projet4\controller;
+namespace Projet4\controller;
 
-use \Openclassrooms\sitesPHP\Openclassroomsproject\projet4\model\PostManager;
-use \Openclassrooms\sitesPHP\Openclassroomsproject\projet4\model\CommentManager;
+use \Projet4\model\PostManager;
+use \Projet4\model\CommentManager;
 // Chargement des classes
 require_once('model/PostManager.php');
 require_once('model/CommentManager.php');
@@ -27,10 +27,13 @@ class Frontend
         $postManager = new PostManager();
         $commentManager = new CommentManager();
 
-        $posts = $postManager->getPosts($_GET['id']);
         $post = $postManager->getPost($_GET['id']);
         $comments = $commentManager->getComments($_GET['id']);
         $countComments=$commentManager->countComments($_GET['id']);
+
+        if ($post === false) {
+            throw new \Exception('Numéro d\'identifiant non valide !');
+        }
 
         require('view/frontend/postView.php');
     }
@@ -41,7 +44,7 @@ class Frontend
         $affectedLines = $commentManager->addPostComment($postId, $author, $comment);
 
         if ($affectedLines === false) {
-            throw new Exception('Impossible d\'ajouter le commentaire !');
+            throw new \Exception('Impossible d\'ajouter le commentaire !');
         }
         else {
             header('Location: index.php?action=post&id=' . $postId);
@@ -60,20 +63,6 @@ class Frontend
        
     }
 
-    public function changeComment($id, $comment)
-    {   
-        $commentManager = new CommentManager();
-
-        $modifiedLines = $commentManager->editComment($id, $comment);
-
-        if ($modifiedLines === false) {
-            throw new Exception('Impossible de modifier le commentaire !');
-        }
-        else {
-            header('Location: index.php?action=post&id='. $_POST['postId']);
-        } 
-    }
-
     public function formReport()
     {   
         $commentManager = new CommentManager();
@@ -88,7 +77,7 @@ class Frontend
 
         $reportComment = $commentManager->insertReport($id); 
         if ($reportComment === false) {
-            throw new Exception('Impossible de signaler le commentaire..');
+            throw new \Exception('Impossible de signaler le commentaire..');
         }
         else {
             header('Location: index.php?action=post&id='. $_POST['postId']);

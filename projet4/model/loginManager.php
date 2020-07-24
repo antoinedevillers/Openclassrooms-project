@@ -1,11 +1,13 @@
 <?php
 
-namespace Openclassrooms\sitesPHP\Openclassroomsproject\projet4\model;
+namespace Projet4\model;
 
 require_once("model/Manager.php");
+require_once("model/Login.php");
 
 class LoginManager extends Manager
 {	
+
     public function getLoginAndPass()
     {
 		$db = $this->dbConnect();

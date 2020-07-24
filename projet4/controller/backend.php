@@ -1,9 +1,9 @@
 <?php
-namespace Openclassrooms\sitesPHP\Openclassroomsproject\projet4\controller;
+namespace Projet4\controller;
 
-use \Openclassrooms\sitesPHP\Openclassroomsproject\projet4\model\PostManager;
-use \Openclassrooms\sitesPHP\Openclassroomsproject\projet4\model\loginManager;
-use \Openclassrooms\sitesPHP\Openclassroomsproject\projet4\model\CommentManager;
+use \Projet4\model\PostManager;
+use \Projet4\model\loginManager;
+use \Projet4\model\CommentManager;
 // Chargement des classes
 require_once('model/loginManager.php');
 
@@ -22,7 +22,7 @@ class Backend
     	$postManager = new PostManager();
     	$modifiedPost = $postManager->editPost( $title, $content, $id);
     	if ($modifiedPost === false) {
-            throw new Exception('Impossible de modifier le billet !');
+            throw new \Exception('Impossible de modifier le billet !');
         }
         else {
             header('Location: index.php?action=formChangePost&id='. $_GET['id']);
@@ -41,7 +41,7 @@ class Backend
         $affectedPost = $postManager->insertPost($title, $content);
 
         if ($affectedPost === false) {
-            throw new Exception('Impossible d\'ajouter le billet !');
+            throw new \Exception('Impossible d\'ajouter le billet !');
         }
         else {
             header('Location: index.php');
@@ -54,7 +54,7 @@ class Backend
 
     	$deletePost = $postManager->erasePost($id);
     	if ($deletePost === false) {
-            throw new Exception('Impossible de supprimer le commentaire !');
+            throw new \Exception('Impossible de supprimer le commentaire !');
         }
         else {
             header('Location: index.php');
@@ -73,7 +73,8 @@ class Backend
 
     	if (!$resultat)
     	{
-    		throw new Exception('Mauvais identifiant ou mot de passe !');
+    		$_SESSION['errorId'] = ''; 
+                    header('Location: index.php?action=formConnexionAdmin');
     	} else {
     	    if ($isPasswordCorrect) {
               session_start();
@@ -84,7 +85,8 @@ class Backend
 
     	    } else {
 
-               throw new Exception('Mauvais identifiant ou mot de passe !');
+               $_SESSION['errorId'] = ''; 
+                    header('Location: index.php?action=formConnexionAdmin');
     	    }
     	}
     }
@@ -115,7 +117,7 @@ class Backend
         $deleteComment = $commentManager->eraseComment($id);
 
         if ($deleteComment === false) {
-            throw new Exception('Impossible de supprimer le commentaire !');
+            throw new \Exception('Impossible de supprimer le commentaire !');
         }
         else {
             header('Location: index.php?action=reportedComments');
@@ -129,7 +131,7 @@ class Backend
         $allowComment = $commentManager->allowCommentReported($id);
 
         if ($allowComment === false) {
-            throw new Exception('Impossible d\'autoriser le commentaire !');
+            throw new \Exception('Impossible d\'autoriser le commentaire !');
         }
         else {
             header('Location: index.php?action=reportedComments');
