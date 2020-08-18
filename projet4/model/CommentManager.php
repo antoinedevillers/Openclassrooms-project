@@ -8,9 +8,11 @@ require_once("model/Comment.php");
 class CommentManager extends Manager
 {
     public function getComments($postId)
-    {   $comments=[];
+    {   
+        //On récupère tous les commentaires pour chaque article
+        $comments=[];
         $pageComment = (!empty($_GET['pageComment']) ? $_GET['pageComment'] : 1);
-        $limite = 3;
+        $limite = 3; // On limite à 3 le nombre de commentaires par page de commentaires
         $debut = ($pageComment - 1) * $limite;
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT * FROM comments WHERE post_id = :post_id ORDER BY comment_date DESC LIMIT :limite OFFSET :debut');
@@ -27,9 +29,7 @@ class CommentManager extends Manager
     }
     public function countComments($postId)
     {   
-     
-        $limite = 3;
-        
+        $limite = 3; // On limite à 3 le nombre de commentaires par page de commentaires
         $db = $this->dbConnect();
         /* On commence par récupérer le nombre d'éléments total. Comme c'est une requête,
          * il ne faut pas oublier qu'on ne récupère pas directement le nombre.
@@ -46,33 +46,37 @@ class CommentManager extends Manager
     public function addPostComment(Comment $comment)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('INSERT INTO comments(post_id, author, comment, comment_date, comment_report) VALUES(:post_id, :author, :comment, NOW(), 0)');
+        // On insère un nouveau commentaire
+        $req = $db->prepare('INSERT INTO comments(post_id, author, com, comment_date, comment_report) VALUES(:post_id, :author, :com, NOW(), 0)');
         $req->bindValue(':post_id',$comment->post_id());
         $req->bindValue(':author',$comment->author());
-        $req->bindValue(':comment',$comment->comment());
+        $req->bindValue(':com',$comment->com());
         $req->execute();
+
     }
     public function getComment($id)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT id, post_id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE id = ?');
+        // On récupère un commentaire avec son id
+        $req = $db->prepare('SELECT id, post_id, author, com, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%imin%ss\') AS comment_date_fr FROM comments WHERE id = ?');
         $req->execute(array($id));
         $data = $req->fetch();
         return new Comment($data);
     }
 
-    public function insertReport(Comment $comment)
+    public function insertReport($id)
     {
         $db = $this->dbConnect();
+        // On modifie ici le champs comment_report de la base de donnée pour lui indiquer que le commentaire est signalé. Par défaut, comment_report = 0. Si le commentaire est signalé, comment_report = 1.
         $req = $db->prepare('UPDATE comments SET comment_report = 1 WHERE id = :id');
-        $req->bindValue(':id', $comment->id());
+        $req->bindValue(':id', $id);
         $req->execute();
         
     }
     public function getCommentReported()
     {
         $db = $this->dbConnect();
-    // On récupère les commentaires signalés 
+    // On récupère les commentaires signalés , soit ceux dont le champs comment_report = 1.
         $req = $db->query('SELECT * FROM comments WHERE comment_report = 1');
        
         while ($data = $req->fetch())
@@ -80,19 +84,23 @@ class CommentManager extends Manager
             $commentReported[] = new Comment($data);
             
         }
-        return $commentReported;
+        if (isset($commentReported))
+        {
+            return $commentReported;
+        }
     }
-    public function eraseComment(Comment $comment)
+    public function eraseComment($id)
     {
         $db = $this->dbConnect();
-        $req = $db->exec('DELETE FROM comments WHERE id = '.$comment->id());
+        // On supprime un commentaire
+        $req = $db->exec('DELETE FROM comments WHERE id = '. $id);
     }
-    public function allowCommentReported(Comment $comment)
+    public function allowCommentReported($id)
     {
         $db = $this->dbConnect();
-    // On modifie la valeur du commentaire dans le champ comment_report pour autoriser sa publication
+    // On modifie la valeur du commentaire de 1 à 0 dans le champ comment_report pour autoriser sa publication. 
         $req = $db->prepare('UPDATE comments SET comment_report = 0 WHERE id = :id');
-        $req->bindValue(':id', $comment->id());
+        $req->bindValue(':id', $id);
         $req->execute();
        
         return $allowComment;

@@ -4,7 +4,7 @@
 
 <div class='imageTitle'>
     <h1>Billet simple pour l'Alaska</h1>
-    <p id ="anchorLastPosts"><a href='#derniersbillets'>Voir les derniers chapitres<a></p>    
+    <p id ="anchorLastPosts"><a href='#derniersbillets'>Voir les derniers chapitres</a></p>    
 </div>
 <section id='billet'>
     

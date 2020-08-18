@@ -3,12 +3,12 @@ namespace Projet4\model;
 
 class Comment
 {
-  private $_id;
-  private $_post_id;
-  private $_author;
-  private $_comment;
-  private $_coment_date;
-  private $_comment_report;
+  private $id;
+  private $post_id;
+  private $author;
+  private $com;
+  private $comment_date;
+  private $comment_report;
 
   public function __construct($donnees)
    {
@@ -30,26 +30,26 @@ class Comment
       }
     }
   }  
-  public function id() { return $this->_id; }
-  public function post_id() { return $this->_post_id; }
-  public function author() { return $this->_author; }
-  public function comment() { return $this->_comment; }
-  public function comment_date() { return $this->_comment_date; }
-  public function comment_report() { return $this->_comment_report; }
+  public function id() { return $this->id; }
+  public function post_id() { return $this->post_id; }
+  public function author() { return $this->author; }
+  public function com() { return $this->com; }
+  public function comment_date() { return $this->comment_date; }
+  public function comment_report() { return $this->comment_report; }
   public function comment_date_fr() { 
-    $date = new \DateTime($this->_comment_date);
+    $date = new \DateTime($this->comment_date);
     return $date->format('d/m/Y H:i:s');
   }
 
   public function setId($id)
   {
-    // L'identifiant du personnage sera, quoi qu'il arrive, un nombre entier.
-    $this->_id = (int) $id;
+    // L'identifiant du commentaire sera, quoi qu'il arrive, un nombre entier.
+    $this->id = (int) $id;
   }
         
   public function setPost_id($post_id)
   {
-      $this->_post_id = (int) $post_id;
+      $this->post_id = (int) $post_id;
   }
 
   public function setAuthor($author)
@@ -58,29 +58,28 @@ class Comment
     // Dont la longueur est inférieure à 30 caractères.
     if (is_string($author) && strlen($author) <= 30)
     {
-      $this->_atuhor = $author;
+      $this->author = $author;
     }
 
   }
 
-  public function setComment($comment)
+  public function setCom($com)
   {
-    $comment = (int) $comment;
 
-  if (is_string($comment) && strlen($comment) <= 300)
+  if (is_string($com) && strlen($com) <= 300)
     {
-      $this->_comment = $comment;
+      $this->com = $com;
     }
   }
 
   public function setComment_date($comment_date)
   {
     
-      $this->_comment_date = $comment_date;
+      $this->comment_date = $comment_date;
   }
 
   public function setComment_report($comment_report)
   {
-        $this->_comment_report = $comment_report;
+        $this->comment_report = $comment_report;
   }
 }

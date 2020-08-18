@@ -5,7 +5,9 @@ class Manager
 {
     protected function dbConnect()
     {
-        $db = new \PDO('mysql:host=localhost;dbname=blog;charset=utf8', 'root', 'root');
+    	$config= parse_ini_file('config.ini');
+        $db = new \PDO('mysql:host='.$config['host'].';dbname='.$config['dbname'].';charset=utf8', $config['login'], $config['password']);
+       
         return $db;
     }
 }

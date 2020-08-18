@@ -44,7 +44,7 @@ class Login
 
   public function setId($id)
   {
-    // L'identifiant du personnage sera, quoi qu'il arrive, un nombre entier.
+    // L'identifiant du login sera, quoi qu'il arrive, un nombre entier.
     $this->_id = (int) $id;
   }
         

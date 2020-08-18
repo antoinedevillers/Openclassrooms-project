@@ -5,153 +5,210 @@ require ('controller/Backend.php');
 
 use \Projet4\controller\Frontend;
 use \Projet4\controller\Backend;
+use \Projet4\model\Post;
+use \Projet4\model\Comment;
 
 try { 
+    // affiche la liste de billets
     if (isset($_GET['action'])) {
-        if ($_GET['action'] == 'listPosts') {
-            $frontend = new Frontend();
-            
-            $listPosts = $frontend->listPosts();
-        }
-        else if ($_GET['action'] == 'post') {
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
-                $frontend = new Frontend();
 
-                $post = $frontend->post();
-            }
-            else {
-                throw new Exception('Aucun identifiant de billet envoyé');
-            }
-        }
-// Action ajout et affichage de commentaires
-        else if ($_GET['action'] == 'addComment') {
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
-                if (!empty($_POST['author']) && !empty($_POST['comment'])) {
+        switch ($_GET['action']) // on indique sur quelle variable on travaille
+        {
+            case 'listPosts':
+                $frontend = new Frontend();
+                
+                $listPosts = $frontend->listPosts();
+
+            break;
+
+            //affiche un billet
+            case 'post':
+                if (isset($_GET['id']) && $_GET['id'] > 0) {
                     $frontend = new Frontend();
 
-                    $addComment = $frontend->addComment($_GET['id'], $_POST['author'], $_POST['comment']);
+                    $post = $frontend->post();
                 }
                 else {
-                    $_SESSION['error'] = ''; 
-                    header('Location: index.php?action=post&id=' . $_GET['id']);
+                    throw new Exception('Aucun identifiant de billet envoyé');
                 }
-            }            
-        } else if($_GET['action'] == 'comment') {
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
-                $frontend = new Frontend();
+            break;
 
-                $comment = $frontend->comment($_GET['id']);
-            } 
-            else {
-                throw new Exception('Aucun identifiant de commentaire');
-            }
+    // Action ajout et affichage de commentaires
 
-//Action connexion/deconnexion à l'administration
+            //Action d'ajout d'un commentaire
+            case 'addComment':
+                if (isset($_GET['id']) && $_GET['id'] > 0) {
+                    if (!empty($_POST['author']) && !empty($_POST['com'])) {
+                        $frontend = new Frontend();
+                        $comment = new Comment($_POST);
+                        $comment->setId($_GET['id']);
+                        $comment->setPost_id($_GET['id']);
+                        $addComment = $frontend->addComment($comment);
+                    }
+                    else {
+                        $_SESSION['error'] = ''; 
+                        header('Location: index.php?action=post&id=' . $_GET['id']);
+                    }
+                }            
+            break;
 
-        } else if ($_GET['action'] == 'connexionAdmin') {
-            if ($_POST['pseudo_Connexion'] == NULL OR $_POST['pass_Connexion'] == NULL){
+            // Action d'affichage des commentaires du billet en question
+            case 'comment':
+                if (isset($_GET['id']) && $_GET['id'] > 0) {
+                    $frontend = new Frontend();
 
-                $_SESSION['error'] = ''; 
-                    header('Location: index.php?action=formConnexionAdmin');
+                    $comment = $frontend->comment($_GET['id']);
+                } 
+                else {
+                    throw new Exception('Aucun identifiant de commentaire');
+                }
+            break;
+    //Action connexion/deconnexion à l'administration
 
-            } else {
-                    $backend = new Backend();
-                    $connexionAdmin = $backend->connexionAdmin();
-            }
-        } else if ($_GET['action'] == 'deconnexionAdmin') {
-            $backend = new Backend();
-            $deconnexionAdmin = $backend->deconnexionAdmin();
+            // Action de connexion à l'espace d'administration
+            case 'connexionAdmin':
+                if ($_POST['pseudo_Connexion'] == NULL OR $_POST['pass_Connexion'] == NULL){
 
-        } else if ($_GET['action'] == 'formConnexionAdmin'){
-            $frontend = new Frontend();
-            $formConnexionAdmin = $frontend->formConnexionAdmin();
+                    $_SESSION['error'] = ''; 
+                        header('Location: index.php?action=formConnexionAdmin');
 
-//Action sur les billets
-
-        } else if ($_GET['action'] == 'formPost'){
-            $backend = new Backend();
-            $formPost = $backend->formPost();
-
-        } else if ($_GET['action'] == 'formChangePost'){
-            $backend = new Backend();
-            $formChangePost = $backend->formChangePost();
-
-        } else if ($_GET['action'] == 'changePost'){
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
-                if (!empty($_POST['title']) && !empty($_POST['content'])) {        
-                    $backend = new Backend();
-                    $changePost = $backend->changePost($_POST['title'],$_POST['content'], $_GET['id']); 
                 } else {
-                    $_SESSION['error'] = ''; 
-                    header('Location: index.php?action=formChangePost&id='. $_GET['id']);
+                        $backend = new Backend();
+                        $connexionAdmin = $backend->connexionAdmin();
                 }
-            } else {
-                throw new Exception('Aucun identifiant de billet envoyé');
-            }
-        } else if($_GET['action'] == 'formCreatePost'){       
+            break;
+
+            //Action de déconnexion de l'espace d'administration
+            case 'deconnexionAdmin':
                 $backend = new Backend();
-                $formCreatePost = $backend->formCreatePost();
-                
-        } elseif ($_GET['action'] == 'addPost') {
+                $deconnexionAdmin = $backend->deconnexionAdmin();
+            break;
+
+            // Affichage du formulaire de connexion à l'espace d'administration
+            case 'formConnexionAdmin':
+                $frontend = new Frontend();
+                $formConnexionAdmin = $frontend->formConnexionAdmin();
+            break;
+
+    //Action sur les billets
+            
+            // affiche le formulaire de modification d'un billet
+            case 'formChangePost':
+                if (isset($_GET['id']) && $_GET['id'] > 0) {
+                    $backend = new Backend();
+                    $formChangePost = $backend->formChangePost();
+                }
+                else {
+                    throw new Exception('Aucun identifiant de billet');
+                }
+            break;
+
+            //action de mofification dun billet
+            case 'changePost':
+                if (isset($_GET['id']) && $_GET['id'] > 0) {
+                    if (!empty($_POST['title']) && !empty($_POST['content'])) {        
+                        $backend = new Backend();
+                        $post = new Post($_POST);
+                        $post->setId($_GET['id']);
+                        $changePost = $backend->changePost($post); 
+
+                    } else {
+                        $_SESSION['error'] = ''; 
+                        header('Location: index.php?action=formChangePost&id='. $_GET['id']);
+                    }
+                } else {
+                    throw new Exception('Aucun identifiant de billet envoyé');
+                }
+            break;
+
+            // affiche le formulaire d'ajout de nouveau billet
+            case 'formCreatePost':     
+                    $backend = new Backend();
+                    $formCreatePost = $backend->formCreatePost();
+            break;
+
+            // action d'ajout de billet
+            case 'addPost':
                 if (!empty($_POST['title']) && !empty($_POST['content'])) {
                     $backend = new Backend();
-
-                    $addPost = $backend->addPost($_POST['title'], $_POST['content']);
+                    $post = new Post($_POST);
+                    $addPost = $backend->addPost($post);
                 }
                 else {
                     $_SESSION['error'] = ''; 
                     header('Location: index.php?action=formCreatePost');
                 }
-        } else if ($_GET['action'] == 'deletePost'){
-            if (isset($_GET['id']) && $_GET['id'] > 0) {                
-                $backend = new Backend();
-                $deletePost = $backend->deletePost($_GET['id']);               
-            }
-            else {
-                throw new Exception('Aucun identifiant de billet');
-            } 
-//Action liée au signalement de commentaire
-        } else if ($_GET['action'] == 'formReport'){
-            $frontend = new Frontend();
-            $formReport = $frontend->formReport();
+            break;
 
-        } else if ($_GET['action'] == 'reportComment'){
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
+            // Action de suppression d'un billet
+            case 'deletePost':
+                if (isset($_GET['id']) && $_GET['id'] > 0) {                
+                    $backend = new Backend();
+                    $deletePost = $backend->deletePost($_GET['id']);               
+                }
+                else {
+                    throw new Exception('Aucun identifiant de billet');
+                } 
+            break;
+
+    //Action liée au signalement de commentaire
+
+            // Affichage du formulaire de signalement d'un commentaire
+            case 'formReport':
                 $frontend = new Frontend();
-                $reportComment = $frontend->reportComment($_GET['id']);
-            } 
-            else {
-                throw new Exception('Aucun identifiant de commentaire');
-            }   
-        } else if ($_GET['action'] == 'reportedComments'){
-            $backend = new Backend();
-            $reportedComments = $backend->reportedComments();
+                $formReport = $frontend->formReport();
+            break;
 
-        } else if ($_GET['action'] == 'deleteComment'){
-            if (isset($_GET['id']) && $_GET['id'] > 0) {                
+            // Action de signalement d'un commentaire
+            case 'reportComment':
+                if (isset($_GET['id']) && $_GET['id'] > 0) {
+                    $frontend = new Frontend();
+                    $reportComment = $frontend->reportComment($_GET['id']);
+                } 
+                else {
+                    throw new Exception('Aucun identifiant de commentaire');
+                } 
+            break;
+
+            //Affichage des commentaires signalés  
+            case 'reportedComments':
                 $backend = new Backend();
-                $deleteComment = $backend->deleteComment($_GET['id']);
-               } 
-            else {
-                throw new Exception('Aucun identifiant de commentaire');
-            } 
-        } else if ($_GET['action'] == 'allowComment'){
-            if (isset($_GET['id']) && $_GET['id'] > 0) {                
-                $backend = new Backend();
-                $allowComment = $backend->allowComment($_GET['id']);
-            } 
-            else {
-                throw new Exception('Aucun identifiant de commentaire');
-            } 
+                $reportedComments = $backend->reportedComments();
+            break;
+
+            // Action de suppression d'un commentaire
+            case 'deleteComment':
+                if (isset($_GET['id']) && $_GET['id'] > 0) {                
+                    $backend = new Backend();
+                    $deleteComment = $backend->deleteComment($_GET['id']);
+                   } 
+                else {
+                    throw new Exception('Aucun identifiant de commentaire');
+                } 
+            break;
+
+            // Action d'autorisation d'un commentaire signalé
+            case 'allowComment':
+                if (isset($_GET['id']) && $_GET['id'] > 0) {                
+                    $backend = new Backend();
+                    $allowComment = $backend->allowComment($_GET['id']);
+                } 
+                else {
+                    throw new Exception('Aucun identifiant de commentaire');
+                } 
+            break;
+
+            default:
+                throw new Exception('Action incorrecte');
         } 
     } else {
         $frontend = new Frontend();
         $listPosts = $frontend->listPosts();
     }
 }
-catch(Exception $e) { // S'il y a eu une erreur, alors...
+catch(Exception $e) { // S'il y a eu une erreur, on affiche la page errorView avec le message adapté.
     $errorMessage = $e->getMessage();
 
-    require('view/frontend/errorView.php');
+    require('view/frontend/errorview.php');
 
 }

@@ -141,7 +141,7 @@ section {
 .comments{
 	border: 1px solid black;
 	padding: 0 10px 0 10px;
-	width: 70%;
+	width: 60%;
     color: black;
     background-color: rgba(255,255,255,0.5);
 
@@ -151,7 +151,7 @@ section {
 	padding: 20px;
 	color: black;
     background-color: rgba(255,255,255,0.5);
-    width:30%;
+    width:40%;
 }
 .inputAddComments{
 	border:1px solid black;
@@ -216,7 +216,7 @@ footer{
 	background-color: rgb(229, 230, 232);
 
 }
-/*Responsive max-width 1024px*/
+/*----------------------------------------Responsive max-width 1024px--------------------------*/
 @media screen and (max-width: 1024px) {
 
 /*Menu burger*/
@@ -230,7 +230,7 @@ footer{
 .btn_navigation .barre{
 	width:30px;
 	height: 3px;
-	background:white;
+	background:black;
 	margin-top: 3px;
 }
 
@@ -279,8 +279,19 @@ nav ul a{
 
 transform: translate(-50%,25%);
 }
+/*Page postView*/
+.containerCommentsAndFormAddComment{
+	display: block;
 }
-/*Responsive max-width 768px*/
+.comments {
+	width:auto;
+}
+.formAddComments {
+    width: auto;
+}
+
+}
+/*------------------------Responsive max-width 768px----------------------*/
 @media screen and (max-width: 768px) {
 
 /*MenuBurger*/
@@ -298,7 +309,7 @@ nav.isOpen{
 }
 /*Page postView*/
 .formAddComments {
-    width: 40%;
+    width: auto;
 }
 /* Page formConnexionAdmin */
 #formulaireAdministrateur{
@@ -325,7 +336,7 @@ nav.isOpen{
 .formReport {
 	width:70%;
 }
-/*Responsive min-width 425px*/
+/*----------------------------Responsive min-width 425px----------------------------------*/
 @media screen and (max-width: 425px) {
 
 /*header*/
@@ -366,7 +377,7 @@ h1{
     width: 90%;
 }
 }
-/*Responsive min-width 325px*/
+/*-------------------------------------Responsive min-width 325px-------------------------*/
 @media screen and (max-width: 325px) {
 
 /*MenuBurger*/

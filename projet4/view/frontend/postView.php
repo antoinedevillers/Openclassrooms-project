@@ -17,13 +17,17 @@
             <h2>Commentaires</h2>
             
             <?php
+            if (isset ($_SESSION['message_confirmation_reported_comment'])){ echo 'Le commentaire a bien été signalé!';}
+                unset($_SESSION['message_confirmation_reported_comment']);
+
             foreach ($comments as $comment)
             {
             
             ?>
             <div class='containerReportedComment'>
-                <p><strong><?= htmlspecialchars($comment->author()) ?></strong> le <?= $comment->comment_date_fr() ?> (<a href='index.php?action=formReport&amp;id=<?= $comment['id'] ?>' title ='signaler le commentaire'> /!\ </a>) </p>
-                <p class='comment'><?= nl2br(htmlspecialchars($comment->comment())) ?></p>
+
+                <p><strong><?= htmlspecialchars($comment->author()) ?></strong> le <?= $comment->comment_date_fr() ?> (<a href='index.php?action=formReport&amp;id=<?= $comment->id() ?>' title ='signaler le commentaire'> /!\ </a>) </p>
+                <p class='comment'><?= nl2br(htmlspecialchars($comment->com())) ?></p>
             </div>                    
             <?php
             }
@@ -60,7 +64,7 @@
                 </div>
                 <div>
                     <label for="comment">Commentaire</label><br />
-                    <textarea id="comment" class='inputAddComments' name="comment" rows="10" cols="30"></textarea>
+                    <textarea id="comment" class='inputAddComments' name="com" rows="10" cols="30"></textarea>
                 </div>
                 <div>
                     <input type="submit" />

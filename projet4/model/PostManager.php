@@ -11,7 +11,7 @@ class PostManager extends Manager
         $posts=[];
 
         $page = (!empty($_GET['page']) ? $_GET['page'] : 1);
-        $limite = 3;
+        $limite = 3; // On limite à 3 le nombre de billets par page de billets
         $debut = ($page - 1) * $limite;
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT * FROM posts ORDER BY creation_date DESC LIMIT :limite OFFSET :debut');
@@ -27,7 +27,7 @@ class PostManager extends Manager
     }
     public function countPosts() // compte le nombre de billets
     {   
-        $limite = 3;
+        $limite = 3; // On limite à 3 le nombre de billets par page de billets
         $db = $this->dbConnect();
         /* On commence par récupérer le nombre d'éléments total. Comme c'est une requête,
          * il ne faut pas oublier qu'on ne récupère pas directement le nombre.
@@ -43,19 +43,23 @@ class PostManager extends Manager
     public function getPost($postId) //récupère un billet sélectionné
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%imin%ss\') AS creation_date_fr FROM posts WHERE id = ?');
-        $req->execute(array($postId));
+        $req = $db->prepare('SELECT * FROM posts WHERE id = :id');
+        $req->bindValue(':id', $postId);
+        $req->execute();
         $post = $req->fetch();
-
+        if ($post == false){
+            return false;
+        }
         return new Post($post);
     }
     public function insertPost(Post $post) // insère un nouveau billet
-    {
+    {       
             $db = $this->dbConnect();
             $req = $db->prepare('INSERT INTO posts(title, content, creation_date) VALUES(:title, :content, NOW())');
             $req->bindValue(':title', $post->title());
             $req->bindValue(':content',$post->content());
             $req->execute();
+            
     }
 
     public function editPost(Post $post)// récupère le billet à modifier
@@ -68,9 +72,9 @@ class PostManager extends Manager
             $req->execute(); 
     }
 
-    public function erasePost(Post $post) // récupère le billet à supprimer
+    public function erasePost($id) // récupère le billet à supprimer
     {
             $db = $this->dbConnect();
-            $comments = $db->prepare('DELETE FROM posts WHERE id = '.$post->id());
+            $comments = $db->exec('DELETE FROM posts WHERE id = '. $id);
     }
 }
